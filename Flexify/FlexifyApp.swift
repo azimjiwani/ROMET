@@ -10,25 +10,20 @@ import AVFoundation
 
 @main
 struct FlexifyApp: App {
+    @State var cameraPermissionGranted = true
     var body: some Scene {
         WindowGroup {
-            DemoAppView()
+            WelcomePage()
         }
     }
 }
 
 struct DemoAppView: View {
-    @State var cameraPermissionGranted = false
+    @State var cameraPermissionGranted = true
     var body: some View {
         GeometryReader { geometry in
             if cameraPermissionGranted {
-                ContentView()
-            }
-        }.onAppear {
-            AVCaptureDevice.requestAccess(for: .video) { accessGranted in
-                DispatchQueue.main.async {
-                    self.cameraPermissionGranted = accessGranted
-                }
+                WelcomePage()
             }
         }
     }
