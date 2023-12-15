@@ -11,6 +11,10 @@
 		0C07CE8E2B2CCAB400B14FC0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C07CE8D2B2CCAB400B14FC0 /* ContentView.swift */; };
 		0C07CE902B2CCAB600B14FC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C07CE8F2B2CCAB600B14FC0 /* Assets.xcassets */; };
 		0C07CE932B2CCAB600B14FC0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C07CE922B2CCAB600B14FC0 /* Preview Assets.xcassets */; };
+		0C07CE9B2B2CCCEB00B14FC0 /* QuickPoseCamera in Frameworks */ = {isa = PBXBuildFile; productRef = 0C07CE9A2B2CCCEB00B14FC0 /* QuickPoseCamera */; };
+		0C07CE9D2B2CCCEB00B14FC0 /* QuickPoseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0C07CE9C2B2CCCEB00B14FC0 /* QuickPoseCore */; };
+		0C07CE9F2B2CCCEB00B14FC0 /* QuickPoseMP in Frameworks */ = {isa = PBXBuildFile; productRef = 0C07CE9E2B2CCCEB00B14FC0 /* QuickPoseMP */; };
+		0C07CEA12B2CCCEB00B14FC0 /* QuickPoseSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0C07CEA02B2CCCEB00B14FC0 /* QuickPoseSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C07CE9D2B2CCCEB00B14FC0 /* QuickPoseCore in Frameworks */,
+				0C07CE9F2B2CCCEB00B14FC0 /* QuickPoseMP in Frameworks */,
+				0C07CE9B2B2CCCEB00B14FC0 /* QuickPoseCamera in Frameworks */,
+				0C07CEA12B2CCCEB00B14FC0 /* QuickPoseSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +91,12 @@
 			dependencies = (
 			);
 			name = Flexify;
+			packageProductDependencies = (
+				0C07CE9A2B2CCCEB00B14FC0 /* QuickPoseCamera */,
+				0C07CE9C2B2CCCEB00B14FC0 /* QuickPoseCore */,
+				0C07CE9E2B2CCCEB00B14FC0 /* QuickPoseMP */,
+				0C07CEA02B2CCCEB00B14FC0 /* QuickPoseSwiftUI */,
+			);
 			productName = Flexify;
 			productReference = 0C07CE882B2CCAB400B14FC0 /* Flexify.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +125,9 @@
 				Base,
 			);
 			mainGroup = 0C07CE7F2B2CCAB400B14FC0;
+			packageReferences = (
+				0C07CE992B2CCCEB00B14FC0 /* XCRemoteSwiftPackageReference "quickpose-ios-sdk" */,
+			);
 			productRefGroup = 0C07CE892B2CCAB400B14FC0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -275,6 +292,7 @@
 				DEVELOPMENT_TEAM = VMV4SR6X96;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "\"We use your camera to track wrist motion\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -304,6 +322,7 @@
 				DEVELOPMENT_TEAM = VMV4SR6X96;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "\"We use your camera to track wrist motion\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -344,6 +363,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0C07CE992B2CCCEB00B14FC0 /* XCRemoteSwiftPackageReference "quickpose-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/quickpose/quickpose-ios-sdk.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0C07CE9A2B2CCCEB00B14FC0 /* QuickPoseCamera */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C07CE992B2CCCEB00B14FC0 /* XCRemoteSwiftPackageReference "quickpose-ios-sdk" */;
+			productName = QuickPoseCamera;
+		};
+		0C07CE9C2B2CCCEB00B14FC0 /* QuickPoseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C07CE992B2CCCEB00B14FC0 /* XCRemoteSwiftPackageReference "quickpose-ios-sdk" */;
+			productName = QuickPoseCore;
+		};
+		0C07CE9E2B2CCCEB00B14FC0 /* QuickPoseMP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C07CE992B2CCCEB00B14FC0 /* XCRemoteSwiftPackageReference "quickpose-ios-sdk" */;
+			productName = QuickPoseMP;
+		};
+		0C07CEA02B2CCCEB00B14FC0 /* QuickPoseSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C07CE992B2CCCEB00B14FC0 /* XCRemoteSwiftPackageReference "quickpose-ios-sdk" */;
+			productName = QuickPoseSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0C07CE802B2CCAB400B14FC0 /* Project object */;
 }
