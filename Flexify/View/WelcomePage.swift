@@ -29,6 +29,7 @@ struct WelcomePage: View {
                 }
                 .padding()
             }
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 }
