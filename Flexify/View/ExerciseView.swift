@@ -63,6 +63,28 @@ struct ExerciseView: View {
     // State variables for set counting
     @State private var setCount: Int = 0
     
+    func computeRep() {
+        // Rep counting logic
+        if isRepInProgress {
+            if abs(angle) >= 0 && abs(angle) <= 10 {
+                // Rep is completed
+                repCount += 1
+                isRepInProgress = false
+            }
+        } else {
+            // Start rep if the angle exceeds 20 degrees
+            if angle > 20 {
+                isRepInProgress = true
+            }
+        }
+        
+        previousAngle = angle
+    }
+    
+    func computeSet() {
+        
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -123,22 +145,6 @@ struct ExerciseView: View {
                                 } else if angle > 180 {
                                     angle = 360 - angle
                                 }
-                                
-                                // Rep counting logic
-                                if isRepInProgress {
-                                    if abs(angle) >= 0 && abs(angle) <= 10 {
-                                        // Rep is completed
-                                        repCount += 1
-                                        isRepInProgress = false
-                                    }
-                                } else {
-                                    // Start rep if the angle exceeds 20 degrees
-                                    if angle > 20 {
-                                        isRepInProgress = true
-                                    }
-                                }
-                                
-                                previousAngle = angle
                             }
                             
                         } else {
@@ -147,8 +153,8 @@ struct ExerciseView: View {
                     })
                 }
                 .onDisappear {
-                    print("stopped")
                     quickPose.stop()
+                    print("stopped")
                 }
                 HStack {
                     Text("Angle: \(max(angle, 0))")
