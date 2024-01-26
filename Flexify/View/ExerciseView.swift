@@ -82,7 +82,9 @@ struct ExerciseView: View {
     }
     
     func computeSet() {
-        
+//        if repCount == viewModel.exercise?.reps {
+//            setCount += 1
+//        }
     }
     
     var body: some View {
@@ -145,6 +147,9 @@ struct ExerciseView: View {
                                 } else if angle > 180 {
                                     angle = 360 - angle
                                 }
+                                
+                                computeRep()
+                                computeSet()
                             }
                             
                         } else {
