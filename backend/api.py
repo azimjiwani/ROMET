@@ -26,7 +26,7 @@ def get_exercises():
         data = {
             key: exercise[key] if exercise[key] is not None else -1000
             for key in [
-                'exerciseName', 'hand', 'reps', 'sets'
+                'exerciseName', 'description', 'hand', 'reps', 'sets'
             ]
         }
         output.append(data)

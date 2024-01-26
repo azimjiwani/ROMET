@@ -23,4 +23,32 @@ struct Exercise: Identifiable {
     let description: String?
     let sets: Int?
     let reps: Int?
+    let hand: Bool?
+    
+    init(json: [String: Any]) {
+        self.name = json["exerciseName"] as? String
+        self.description = json["description"] as? String
+        self.sets = json["sets"] as? Int
+        self.reps = json["reps"] as? Int
+        self.hand = json["hand"] as? Bool
+        
+        // Map exerciseName to ExerciseType
+        if let exerciseName = name?.toCamelCase() {
+            self.type = ExerciseType(rawValue: exerciseName)
+        } else {
+            self.type = nil
+        }
+    }
+}
+
+extension String {
+    func toCamelCase() -> String {
+        let components = self.components(separatedBy: " ")
+
+        let camelCaseString = components.enumerated().map { index, component in
+            return index == 0 ? component.lowercased() : component.capitalized
+        }.joined()
+
+        return camelCaseString
+    }
 }

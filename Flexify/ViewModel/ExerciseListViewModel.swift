@@ -12,8 +12,10 @@ class ExerciseListViewModel: ObservableObject {
     @Published var exerciseList = [Exercise]()
 
     func getExercises() {
-        NetworkManager.fetchExercises() { exercises in
-            self.exerciseList = exercises
+        NetworkManager.shared.fetchExercises() { exercises in
+            if let exercises = exercises {
+                self.exerciseList = exercises
+            }
         }
     }
 }
