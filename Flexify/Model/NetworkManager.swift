@@ -10,9 +10,11 @@ import Foundation
 class NetworkManager {
     static let shared = NetworkManager()
     
+    let backendURL = Constants.backendURL
+    
     func fetchExercises(completion: @escaping ([Exercise]?) -> Void) {
         // Replace the URL with your actual endpoint
-        guard let url = URL(string: "https://flexifybackend.vercel.app/get-all-exercises/") else {
+        guard let url = URL(string: "\(backendURL)/get-all-exercises/") else {
             completion(nil)
             return
         }
@@ -50,5 +52,36 @@ class NetworkManager {
         }
         
         task.resume()
+    }
+    
+    
+    func uploadExerciseInfo(exercise: Exercise) {
+//        let encoder = JSONEncoder()
+//        
+//        do {
+//            // Encode the exercise data to JSON data
+//            let jsonData = try encoder.encode(exercise)
+//            
+//            // Define the URL for your backend endpoint
+//            guard let url = URL(string: "http://127.0.0.1:8000/upload-completed-exercise/") else {
+//                print("Invalid URL")
+//                return
+//            }
+//            
+//            // Create a URLRequest
+//            var request = URLRequest(url: url)
+//            request.httpMethod = "POST"
+//            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//            request.httpBody = jsonData
+//            
+//            // Perform the POST request
+//            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//                // Handle the response or error here
+//            }
+//            task.resume()
+//            
+//        } catch {
+//            print("Error encoding exercise data: \(error.localizedDescription)")
+//        }
     }
 }

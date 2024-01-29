@@ -12,13 +12,9 @@ import SwiftUI
 import QuickPoseCore
 import QuickPoseSwiftUI
 
-enum API_KEY {
-    static let key: String = "01HHQA2TDGWH12D8HWFYXY6HA3"
-}
-
 struct ExerciseView: View {
     var viewModel: ExerciseViewModel
-    var quickPose = QuickPose(sdkKey: API_KEY.key)
+    var quickPose = QuickPose(sdkKey: Constants.sdkKey)
     
     var point1: QuickPose.Landmarks.Body {
         switch viewModel.exercise?.type {
@@ -63,6 +59,8 @@ struct ExerciseView: View {
     // State variables for set counting
     @State private var setCount: Int = 0
     
+    @State private var isVisible = false
+    
     func computeRep() {
         // Rep counting logic
         if isRepInProgress {
@@ -82,9 +80,10 @@ struct ExerciseView: View {
     }
     
     func computeSet() {
-//        if repCount == viewModel.exercise?.reps {
-//            setCount += 1
-//        }
+        if repCount == viewModel.exercise?.reps {
+            setCount += 1
+            repCount = 0
+        }
     }
     
     var body: some View {
@@ -118,7 +117,15 @@ struct ExerciseView: View {
                 }
                 .frame(width: geometry.size.width)
                 .edgesIgnoringSafeArea(.all)
+                .onChange(of: isVisible) { newValue in
+                    if !newValue {
+                        // View is no longer visible, perform cleanup or stop ongoing processes
+                        quickPose.stop()
+                        print("stopped")
+                    }
+                }
                 .onAppear {
+                    isVisible = true
                     print("started")
                     quickPose.start(features: [], onFrame: { status, image, features, feedback, landmarks in
                         overlayImage = image
@@ -158,6 +165,7 @@ struct ExerciseView: View {
                     })
                 }
                 .onDisappear {
+                    isVisible = false
                     quickPose.stop()
                     print("stopped")
                 }
