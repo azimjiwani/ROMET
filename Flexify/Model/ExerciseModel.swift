@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ExerciseType: String {
+enum ExerciseType: String, Codable {
     case wristFlexion
     case wristExtension
     case ulnarDeviation
@@ -16,7 +16,7 @@ enum ExerciseType: String {
     case supination
 }
 
-struct Exercise: Identifiable {
+struct Exercise: Identifiable, Codable {
     var id = UUID()
     let type: ExerciseType?
     let name: String?
@@ -24,6 +24,9 @@ struct Exercise: Identifiable {
     let sets: Int?
     let reps: Int?
     let hand: Bool?
+    var completedSets: Int?
+    var completedReps: Int?
+    var maxAngle: Float?
     
     init(json: [String: Any]) {
         self.name = json["exerciseName"] as? String
@@ -38,6 +41,9 @@ struct Exercise: Identifiable {
         } else {
             self.type = nil
         }
+        self.completedReps = 0
+        self.completedSets = 0
+        self.maxAngle = 0.0
     }
 }
 

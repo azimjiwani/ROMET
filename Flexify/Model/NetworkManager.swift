@@ -54,34 +54,52 @@ class NetworkManager {
         task.resume()
     }
     
-    
-    func uploadExerciseInfo(exercise: Exercise) {
-//        let encoder = JSONEncoder()
-//        
-//        do {
-//            // Encode the exercise data to JSON data
-//            let jsonData = try encoder.encode(exercise)
-//            
-//            // Define the URL for your backend endpoint
-//            guard let url = URL(string: "http://127.0.0.1:8000/upload-completed-exercise/") else {
-//                print("Invalid URL")
-//                return
-//            }
-//            
-//            // Create a URLRequest
-//            var request = URLRequest(url: url)
-//            request.httpMethod = "POST"
-//            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//            request.httpBody = jsonData
-//            
-//            // Perform the POST request
-//            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//                // Handle the response or error here
-//            }
-//            task.resume()
-//            
-//        } catch {
-//            print("Error encoding exercise data: \(error.localizedDescription)")
-//        }
+    func postExercise(exercise: Exercise) {
+        let encoder = JSONEncoder()
+        
+        do {
+            // Convert Exercise to a dictionary
+            let exerciseDict = try JSONSerialization.jsonObject(with: try JSONEncoder().encode(exercise), options: []) as! [String: Any]
+            
+            // Define the URL for your backend endpoint
+            guard let url = URL(string: "\(backendURL)/upload-completed-exercise/") else {
+                print("Invalid URL")
+                return
+            }
+            
+            // Create a URLRequest
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try JSONSerialization.data(withJSONObject: exerciseDict, options: [])
+            
+            // Perform the POST request
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                // Check for errors
+                if let error = error {
+                    print("Error making POST request: \(error.localizedDescription)")
+                    return
+                }
+                
+                // Check for response
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    print("Invalid response")
+                    return
+                }
+                
+                // Check HTTP status code
+                if (200...299).contains(httpResponse.statusCode) {
+                    print("Exercise uploaded successfully")
+                    // Handle success
+                } else {
+                    print("Failed to upload exercise. Status code: \(httpResponse.statusCode)")
+                    // Handle failure
+                }
+            }
+            task.resume()
+            
+        } catch {
+            print("Error encoding exercise data: \(error.localizedDescription)")
+        }
     }
 }

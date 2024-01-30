@@ -1,8 +1,0 @@
-Flask
-requests
-jsonify
-flask_cors
-pymongo
-Flask-RESTful
-Flask-Cors
-config

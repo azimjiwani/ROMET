@@ -59,6 +59,8 @@ struct ExerciseView: View {
     // State variables for set counting
     @State private var setCount: Int = 0
     
+    @State private var maxAngle: Float = 0.0
+    
     @State private var isVisible = false
     
     func computeRep() {
@@ -83,7 +85,17 @@ struct ExerciseView: View {
         if repCount == viewModel.exercise?.reps {
             setCount += 1
             repCount = 0
+            prepareForUpload()
         }
+    }
+    
+    func prepareForUpload(){
+        if let reps = viewModel.exercise?.reps {
+            viewModel.exercise?.completedReps = (setCount * reps) + repCount
+        }
+        viewModel.exercise?.completedSets = setCount
+        viewModel.exercise?.maxAngle = maxAngle
+        viewModel.uploadExercise()
     }
     
     var body: some View {
@@ -154,6 +166,8 @@ struct ExerciseView: View {
                                 } else if angle > 180 {
                                     angle = 360 - angle
                                 }
+                                
+//                                maxAngle = max(maxAngle, angle)
                                 
                                 computeRep()
                                 computeSet()
