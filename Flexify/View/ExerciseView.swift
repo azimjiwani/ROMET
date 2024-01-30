@@ -85,7 +85,6 @@ struct ExerciseView: View {
         if repCount == viewModel.exercise?.reps {
             setCount += 1
             repCount = 0
-            prepareForUpload()
         }
     }
     
@@ -101,18 +100,28 @@ struct ExerciseView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                Text(viewModel.exercise?.name ?? "no name")
-                Text(viewModel.exercise?.type?.rawValue.capitalized ?? "no type")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                Text(viewModel.exercise?.description ?? "no type")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                HStack{
+                    Spacer()
+                    Text(viewModel.exercise?.name ?? "no name")
+                    Spacer()
+                    Button {
+                        print("Info button tapped")
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                }
+                .offset(y: -32)
+                    
+                if let reps = viewModel.exercise?.reps, let sets = viewModel.exercise?.sets {
+                    Text("Sets: \(sets) | Reps: \(reps)")
+                        .offset(y: -32)
+                }
                 
                 ZStack(alignment: .top) {
                     QuickPoseCameraView(useFrontCamera: true, delegate: quickPose, videoGravity: .resizeAspect)
                     QuickPoseOverlayView(overlayImage: $overlayImage, contentMode: .fit)
                 }
+                .offset(y: -32)
                 .overlay(alignment: .topLeading) {
                     Circle()
                         .position(x: leftElbowPoint.x, y: leftElbowPoint.y)
@@ -167,7 +176,7 @@ struct ExerciseView: View {
                                     angle = 360 - angle
                                 }
                                 
-//                                maxAngle = max(maxAngle, angle)
+                                //                                maxAngle = max(maxAngle, angle)
                                 
                                 computeRep()
                                 computeSet()
@@ -196,6 +205,15 @@ struct ExerciseView: View {
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.white)
                 }
+                Button("Complete Exercise") {
+                    prepareForUpload()
+                }
+                .font(.headline)
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.blue)
+                .frame(height: 40)
+                .cornerRadius(20)
                 Spacer()
             }
         }
