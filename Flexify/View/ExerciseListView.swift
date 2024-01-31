@@ -11,8 +11,12 @@ struct ExerciseListView: View {
     @ObservedObject var viewModel = ExerciseListViewModel()
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("Exercises")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(20)
+            
             List {
                 ForEach(viewModel.exerciseList, id: \.id) { exercise in
                     let exerciseViewModel = ExerciseViewModel(exercise: exercise)
@@ -28,7 +32,10 @@ struct ExerciseListView: View {
                     }
                 }
             }
+            Spacer()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(12)
         .onAppear {
             viewModel.getExercises()
         }

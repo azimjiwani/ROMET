@@ -102,8 +102,6 @@ struct ExerciseView: View {
             VStack {
                 HStack{
                     Spacer()
-                    Text(viewModel.exercise?.name ?? "no name")
-                    Spacer()
                     Button {
                         print("Info button tapped")
                     } label: {
@@ -205,17 +203,18 @@ struct ExerciseView: View {
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.white)
                 }
-                Button("Complete Exercise") {
-                    prepareForUpload()
+                NavigationLink(destination: ExerciseSummaryView(viewModel: viewModel)) {
+                    Text("Complete Exercise")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue)
+                        .frame(height: 40)
+                        .cornerRadius(20)
                 }
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.blue)
-                .frame(height: 40)
-                .cornerRadius(20)
                 Spacer()
             }
         }
+        .navigationBarTitle(viewModel.exercise?.name ?? "no name")
     }
 }
