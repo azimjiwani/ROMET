@@ -11,6 +11,8 @@ struct ExerciseSummaryView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var viewModel: ExerciseViewModel
+    @State private var painRating: Double = 0.0
+    @State private var difficultyRating: Double = 0.0
     
     var body: some View {
         VStack(alignment: .leading) { // Align VStack to leading edge
@@ -57,9 +59,17 @@ struct ExerciseSummaryView: View {
             }
             .padding(20)
             
+            // rate pain
+            RatingView(title: "Pain", rating: $painRating) { newValue in
+                viewModel.exercise?.painRating = newValue
+            }
+            
+            RatingView(title: "Difficulty", rating: $difficultyRating) { newValue in
+                viewModel.exercise?.difficultyRating = newValue
+            }
+            
+            // notes
             Spacer()
-            
-            
             
             // Button to navigate back to the main screen
             Button("Go to Main Screen") {
@@ -72,8 +82,3 @@ struct ExerciseSummaryView: View {
         .padding(12)
     }
 }
-
-// rank difficulty
-// rank pain
-
-// notes

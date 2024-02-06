@@ -5,9 +5,6 @@
 //  Created by Azim Jiwani on 2023-12-15.
 //
 
-
-// var quickPose = QuickPose(sdkKey: "01HHQA2TDGWH12D8HWFYXY6HA3") // register for your free key at https://dev.quickpose.ai
-
 import SwiftUI
 import QuickPoseCore
 import QuickPoseSwiftUI
