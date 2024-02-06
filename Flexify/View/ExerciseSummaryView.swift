@@ -61,11 +61,11 @@ struct ExerciseSummaryView: View {
             
             // rate pain
             RatingView(title: "Pain", rating: $painRating) { newValue in
-                viewModel.exercise?.painRating = newValue
+                viewModel.exercise?.painRating = Int(newValue.rounded())
             }
             
             RatingView(title: "Difficulty", rating: $difficultyRating) { newValue in
-                viewModel.exercise?.difficultyRating = newValue
+                viewModel.exercise?.difficultyRating = Int(newValue.rounded())
             }
             
             // notes
