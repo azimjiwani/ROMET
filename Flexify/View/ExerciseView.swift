@@ -85,13 +85,12 @@ struct ExerciseView: View {
         }
     }
     
-    func prepareForUpload(){
+    func prepareForSummary(){
         if let reps = viewModel.exercise?.reps {
             viewModel.exercise?.completedReps = (setCount * reps) + repCount
         }
         viewModel.exercise?.completedSets = setCount
         viewModel.exercise?.maxAngle = maxAngle
-        viewModel.uploadExercise()
     }
     
     var body: some View {
@@ -171,7 +170,7 @@ struct ExerciseView: View {
                                     angle = 360 - angle
                                 }
                                 
-                                //                                maxAngle = max(maxAngle, angle)
+                                // max angle computation
                                 
                                 computeRep()
                                 computeSet()
@@ -188,17 +187,24 @@ struct ExerciseView: View {
                     print("stopped")
                 }
                 HStack {
+                    
+//                    computeMaxAngle(angle: max(angle, 0))
+                    
                     Text("Angle: \(max(angle, 0))")
                         .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(.white)
+                        .onChange(of: angle) { newValue in
+                            maxAngle = max(Float(angle), maxAngle)
+                        }
+//                       .foregroundColor(.white)
+                    
                     
                     Text("Reps: \(repCount)")
                         .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(.white)
+//                        .foregroundColor(.white)
                     
                     Text("Sets: \(setCount)")
                         .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(.white)
+//                        .foregroundColor(.white)
                 }
                 NavigationLink(destination: ExerciseSummaryView(viewModel: viewModel)) {
                     Text("Complete Exercise")
@@ -208,7 +214,9 @@ struct ExerciseView: View {
                         .background(Color.blue)
                         .frame(height: 40)
                         .cornerRadius(20)
-                }
+                }.simultaneousGesture(TapGesture().onEnded{
+                    prepareForSummary()
+                })
                 Spacer()
             }
         }

@@ -29,6 +29,7 @@ struct Exercise: Identifiable, Codable {
     var maxAngle: Float?
     var painRating: Int?
     var difficultyRating: Int?
+    var notes: String?
     
     init(json: [String: Any]) {
         self.name = json["exerciseName"] as? String
@@ -48,6 +49,7 @@ struct Exercise: Identifiable, Codable {
         self.maxAngle = 0.0
         self.painRating = 0
         self.difficultyRating = 0
+        self.notes = ""
     }
 }
 
