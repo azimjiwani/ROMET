@@ -10,10 +10,13 @@ import SwiftUI
 struct DashboardView: View {
     var body: some View {
         VStack {
-            Text("Dashboard")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(20)
+            HStack {
+                Text("Dashboard")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(20)
+                Spacer()
+            }
             
             ScrollView(.vertical) {
                 VStack(alignment: .center, spacing: 20) { // Align the ScrollView contents to the center
@@ -63,9 +66,15 @@ struct CustomGaugeTileView: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
             
-            CustomGaugeView(currVal: currVal, minVal: minVal, maxVal: maxVal, label1: label1, label2: label2, exerciseName: exerciseName)
+            VStack(spacing: 15) {
+                CustomGaugeView(currVal: currVal, minVal: minVal, maxVal: maxVal, label1: label1, label2: label2, exerciseName: exerciseName)
+                if exerciseName != nil {
+                    Text("↑ 10% from last week")
+                        .foregroundStyle(.black)
+                }
+            }
         }
-        .frame(height: 170)
+        .frame(height: exerciseName != nil ? 210 : 190)
     }
 }
 
@@ -96,15 +105,17 @@ struct CustomGaugeView: View {
                 
                 if exerciseName != nil {
                     Text("\(currVal.formatted(.number))")
-                        .font(.system(size: 32), .lineHeight)
+                        .font(.system(size: 32))
                     Text("/\(maxVal.formatted(.number))°")
                         .font(.system(size: 16))
+                        .baselineOffset(6)
                     
                 } else {
                     Text("\(currVal.formatted(.number))")
                         .font(.system(size: 32))
                     Text("/\(maxVal.formatted(.number))")
                         .font(.system(size: 16))
+                        .baselineOffset(6)
                 }
             }
         }
