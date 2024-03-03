@@ -11,33 +11,44 @@ struct ExerciseListView: View {
     @ObservedObject var viewModel = ExerciseListViewModel()
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Exercises")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(20)
-            
-            List {
-                ForEach(viewModel.exerciseList, id: \.id) { exercise in
-                    let exerciseViewModel = ExerciseViewModel(exercise: exercise)
-                    let exerciseView = ExerciseView(viewModel: exerciseViewModel)
-                    
-                    NavigationLink(destination: exerciseView) {
-                        VStack(alignment: .leading) {
-                            Text(exercise.name ?? "no name")
-                            Text(exercise.type?.rawValue.capitalized ?? "no type")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+        TabView {
+            VStack(alignment: .leading) {
+                Text("Exercises")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(20)
+                
+                List {
+                    ForEach(viewModel.exerciseList, id: \.id) { exercise in
+                        let exerciseViewModel = ExerciseViewModel(exercise: exercise)
+                        let exerciseView = ExerciseView(viewModel: exerciseViewModel)
+                        
+                        NavigationLink(destination: exerciseView) {
+                            VStack(alignment: .leading) {
+                                Text(exercise.name ?? "no name")
+                                Text(exercise.type?.rawValue.capitalized ?? "no type")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
                         }
                     }
                 }
+                Spacer()
             }
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(12)
-        .onAppear {
-            viewModel.getExercises()
+            .tabItem {
+                Label("Exercises", systemImage: "calendar")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(12)
+            .onAppear {
+                viewModel.getExercises()
+            }
+            
+            DashboardView()
+                .tabItem {
+                    Label("Dashboard", systemImage: "chart.line.uptrend.xyaxis")
+                }
+            
         }
         .navigationBarHidden(true)
     }
