@@ -9,14 +9,49 @@ import SwiftUI
 
 struct ExerciseListView: View {
     @ObservedObject var viewModel = ExerciseListViewModel()
+    @State private var currentDate = Date()
+    
+    func formattedDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy"
+        return formatter.string(from: date)
+    }
     
     var body: some View {
         TabView {
-            VStack(alignment: .leading) {
-                Text("Exercises")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(20)
+            VStack {
+                HStack {
+                    Text("Exercises")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding(20)
+                    Spacer()
+                }
+                
+                
+                HStack {
+                    Button(action: {
+                        self.currentDate = Calendar.current.date(byAdding: .day, value: -1, to: self.currentDate) ?? self.currentDate
+                        // Update items in the list based on new date
+//                        self.updateItems()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .padding()
+                    }
+                    
+                    Text("\(formattedDate(date: currentDate))")
+                        .font(.title)
+                        .padding()
+                    
+                    Button(action: {
+                        self.currentDate = Calendar.current.date(byAdding: .day, value: 1, to: self.currentDate) ?? self.currentDate
+                        // Update items in the list based on new date
+//                        self.updateItems()
+                    }) {
+                        Image(systemName: "chevron.right")
+                            .padding()
+                    }
+                }
                 
                 List {
                     ForEach(viewModel.exerciseList, id: \.id) { exercise in
