@@ -16,7 +16,12 @@ struct ExerciseView: View {
     var point1: QuickPose.Landmarks.Body {
         switch viewModel.exercise?.type {
         case .wristFlexion, .wristExtension, .ulnarDeviation, .radialDeviation:
-            return QuickPose.Landmarks.Body.elbow(side: .left)
+            if let leftHand = viewModel.exercise?.hand {
+                if leftHand == true {
+                    return QuickPose.Landmarks.Body.elbow(side: .left)
+                }
+            }
+            return QuickPose.Landmarks.Body.elbow(side: .right)
         case .pronation, .supination, .none:
             return QuickPose.Landmarks.Body.elbow(side: .left)
         }
@@ -25,7 +30,12 @@ struct ExerciseView: View {
     var point2: QuickPose.Landmarks.Body {
         switch viewModel.exercise?.type {
         case .wristFlexion, .wristExtension, .ulnarDeviation, .radialDeviation:
-            return QuickPose.Landmarks.Body.wrist(side: .left)
+            if let leftHand = viewModel.exercise?.hand {
+                if leftHand == true {
+                    return QuickPose.Landmarks.Body.wrist(side: .left)
+                }
+            }
+            return QuickPose.Landmarks.Body.wrist(side: .right)
         case .pronation, .supination, .none:
             return QuickPose.Landmarks.Body.wrist(side: .left)
         }
@@ -46,7 +56,8 @@ struct ExerciseView: View {
     @State private var leftElbowPoint = CGPoint(x: 1080/2, y: 1920/2)
     @State private var leftWristPoint = CGPoint(x: 1080/2, y: 1920/2)
     @State private var leftMCP3Point = CGPoint(x: 1080/2, y: 1920/2)
-    @State private var angle: CGFloat = 0.0
+    @State private var rawAngle: CGFloat = 0.0
+    @State private var jointAngle: CGFloat = 0.0
     
     // State variables for rep counting
     @State private var repCount: Int = 0
@@ -60,22 +71,72 @@ struct ExerciseView: View {
     
     @State private var isVisible = false
     
+    func computeJointAngle(rawAngle: CGFloat) {
+        // if wrist flexion and left hand:
+        if viewModel.exercise?.hand == true {
+            if viewModel.exercise?.type == .wristFlexion {
+                // wrist flexion
+                jointAngle = 180 + rawAngle
+            }
+            
+            // if wrist extension and left hand
+            if viewModel.exercise?.type == .wristExtension {
+                jointAngle = (-1 * rawAngle) - 180
+            }
+            
+            // if ulnar deviation and left hand:
+            if viewModel.exercise?.type == .ulnarDeviation {
+                jointAngle = 180 + rawAngle
+            }
+            
+            // if radial deviation and left hand:
+            if viewModel.exercise?.type == .radialDeviation {
+                jointAngle = 180 + rawAngle
+            }
+            
+        } else {
+            if viewModel.exercise?.type == .wristFlexion {
+                // wrist flexion
+                jointAngle = (-1 * rawAngle) - 180
+            }
+            
+            // wrist extension
+            if viewModel.exercise?.type == .wristExtension {
+                jointAngle = 180 + rawAngle
+            }
+            
+            // if ulnar deviation and right hand:
+            if viewModel.exercise?.type == .ulnarDeviation {
+                jointAngle = (-1 * rawAngle) - 180
+            }
+            
+            // if radial deviation and right hand:
+            if viewModel.exercise?.type == .radialDeviation {
+                jointAngle = (-1 * rawAngle) - 180
+            }
+        }
+        
+        if jointAngle < 0 {
+            jointAngle = 0
+        }
+    }
+    
     func computeRep() {
         // Rep counting logic
         if isRepInProgress {
-            if abs(angle) >= 0 && abs(angle) <= 10 {
+            if abs(jointAngle) >= 0 && abs(jointAngle) <= 10 {
                 // Rep is completed
                 repCount += 1
                 isRepInProgress = false
             }
         } else {
             // Start rep if the angle exceeds 20 degrees
-            if angle > 20 {
+            if abs(jointAngle) > 20 {
                 isRepInProgress = true
             }
         }
         
-        previousAngle = angle
+        previousAngle = jointAngle
     }
     
     func computeSet() {
@@ -105,7 +166,7 @@ struct ExerciseView: View {
                     }
                 }
                 .offset(y: -32)
-                    
+                
                 if let reps = viewModel.exercise?.reps, let sets = viewModel.exercise?.sets {
                     Text("Sets: \(sets) | Reps: \(reps)")
                         .offset(y: -32)
@@ -152,26 +213,21 @@ struct ExerciseView: View {
                             leftWristPoint = leftWrist.cgPoint(scaledTo: geometry.size, flippedHorizontally: true)
                             
                             // Left mcp3
-                            if let leftMCP3 = landmarks.landmark(forLeftHand: point3) {
-                                leftMCP3Point = leftMCP3.cgPoint(scaledTo: geometry.size, flippedHorizontally: true)
+                            if viewModel.exercise?.hand == true {
+                                if let leftMCP3 = landmarks.landmark(forLeftHand: point3) {
+                                    leftMCP3Point = leftMCP3.cgPoint(scaledTo: geometry.size, flippedHorizontally: true)
+                                }
+                            } else {
+                                if let leftMCP3 = landmarks.landmark(forRightHand: point3) {
+                                    leftMCP3Point = leftMCP3.cgPoint(scaledTo: geometry.size, flippedHorizontally: true)
+                                }
                             }
                             
                             if leftElbow.visibility >= 0.9 && leftWrist.visibility >= 0.9 {
                                 
-                                // Compute joint angle
-                                angle = 180 - (atan2(leftMCP3Point.y - leftWristPoint.y, leftMCP3Point.x - leftWristPoint.x) - atan2(leftElbowPoint.y - leftWristPoint.y, leftElbowPoint.x - leftWristPoint.x)) * 180 / .pi
+                                rawAngle = (atan2(leftMCP3Point.y - leftWristPoint.y, leftMCP3Point.x - leftWristPoint.x) - atan2(leftElbowPoint.y - leftWristPoint.y, leftElbowPoint.x - leftWristPoint.x)) * 180 / .pi
                                 
-                                if angle < 0 {
-                                    angle += 360
-                                    if angle > 180 {
-                                        angle = 360 - angle
-                                    }
-                                } else if angle > 180 {
-                                    angle = 360 - angle
-                                }
-                                
-                                // max angle computation
-                                
+                                computeJointAngle(rawAngle: rawAngle)
                                 computeRep()
                                 computeSet()
                             }
@@ -188,23 +244,21 @@ struct ExerciseView: View {
                 }
                 HStack {
                     
-//                    computeMaxAngle(angle: max(angle, 0))
-                    
-                    Text("Angle: \(max(angle, 0))")
+                    Text("Angle: \(max(jointAngle, 0))")
                         .font(.system(size: 16, weight: .semibold))
-                        .onChange(of: angle) { newValue in
-                            maxAngle = max(Float(angle), maxAngle)
+                        .onChange(of: jointAngle) { newValue in
+                            maxAngle = max(Float(jointAngle), maxAngle)
                         }
-//                       .foregroundColor(.white)
+                    //                       .foregroundColor(.white)
                     
                     
                     Text("Reps: \(repCount)")
                         .font(.system(size: 16, weight: .semibold))
-//                        .foregroundColor(.white)
+                    //                        .foregroundColor(.white)
                     
                     Text("Sets: \(setCount)")
                         .font(.system(size: 16, weight: .semibold))
-//                        .foregroundColor(.white)
+                    //                        .foregroundColor(.white)
                 }
                 NavigationLink(destination: ExerciseSummaryView(viewModel: viewModel)) {
                     Text("Complete Exercise")

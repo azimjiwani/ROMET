@@ -61,9 +61,16 @@ struct ExerciseListView: View {
                         NavigationLink(destination: exerciseView) {
                             VStack(alignment: .leading) {
                                 Text(exercise.name ?? "no name")
-                                Text(exercise.type?.rawValue.capitalized ?? "no type")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
+                                HStack {
+                                    Text(exercise.type?.rawValue.capitalized ?? "no type")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                    
+                                    Text(exercise.hand == true ? "left" : "right" )
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                    
+                                }
                             }
                         }
                     }

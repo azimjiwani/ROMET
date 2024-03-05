@@ -13,7 +13,7 @@ struct WelcomePage: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Welcome to Flexify")
+                Text("Welcome to ROMET")
                     .font(.largeTitle)
                     .padding()
                 
