@@ -132,6 +132,7 @@ struct ExerciseSummaryView: View {
                     viewModel.uploadExercise()
                     presentationMode.wrappedValue.dismiss() // Dismiss current view
                     presentationMode.wrappedValue.dismiss()
+                    presentationMode.wrappedValue.dismiss()
                 }
                 .padding() // Add padding to the button
                 .background(.blue)

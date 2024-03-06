@@ -61,9 +61,9 @@ struct ExerciseListView: View {
                                 ForEach(index ..< min(index + 4, viewModel.exerciseList.count), id: \.self) { innerIndex in
                                     let exercise = viewModel.exerciseList[innerIndex]
                                     let exerciseViewModel = ExerciseViewModel(exercise: exercise)
-                                    let exerciseView = ExerciseView(viewModel: exerciseViewModel)
+                                    let instructionView = InstructionsView(viewModel: exerciseViewModel)
                                     
-                                    NavigationLink(destination: exerciseView) {
+                                    NavigationLink(destination: instructionView) {
                                         VStack(alignment: .leading) {
                                             Text(exercise.name ?? "no name")
                                             HStack {

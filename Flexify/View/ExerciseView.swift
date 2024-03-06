@@ -71,6 +71,15 @@ struct ExerciseView: View {
     
     @State private var isVisible = false
     
+    @State private var showCompleteMessage = false
+    
+    private func showComplete() {
+        showCompleteMessage = true
+        Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { _ in
+            showCompleteMessage = false
+        }
+    }
+    
     func computeJointAngle(rawAngle: CGFloat) {
         // if wrist flexion and left hand:
         if viewModel.exercise?.hand == true {
@@ -190,6 +199,31 @@ struct ExerciseView: View {
                         .position(x: leftMCP3Point.x, y: leftMCP3Point.y)
                         .frame(width: 12, height: 12)
                         .foregroundColor(Color.green.opacity(1.0))
+                }
+                .overlay(alignment: .center) {
+                    if setCount == viewModel.exercise?.sets {
+                        ZStack {
+                            Rectangle()
+                                .fill(Color.white)
+                                .cornerRadius(10)
+                                .frame(height: 80)
+                                .padding(.horizontal, 15)
+                            VStack {
+                                Text("Well Done!")
+                                    .font(.system(size: 24, weight: .bold)) // Adjust size and weight as needed
+                                    .foregroundColor(.blue)
+                                
+                                Text("You have completed this exercise")
+                                    .font(.system(size: 20, weight: .bold)) // Adjust size and weight as needed
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                        .opacity(showCompleteMessage ? 1 : 0) // Show message based on state
+                        .padding()
+                        .onAppear {
+                            showComplete() // Call the function to show the message
+                        }
+                    }
                 }
                 .frame(width: geometry.size.width)
                 .edgesIgnoringSafeArea(.all)
