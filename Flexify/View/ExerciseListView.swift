@@ -33,7 +33,7 @@ struct ExerciseListView: View {
                     Button(action: {
                         self.currentDate = Calendar.current.date(byAdding: .day, value: -1, to: self.currentDate) ?? self.currentDate
                         // Update items in the list based on new date
-//                        self.updateItems()
+                        //                        self.updateItems()
                     }) {
                         Image(systemName: "chevron.left")
                             .padding()
@@ -46,7 +46,7 @@ struct ExerciseListView: View {
                     Button(action: {
                         self.currentDate = Calendar.current.date(byAdding: .day, value: 1, to: self.currentDate) ?? self.currentDate
                         // Update items in the list based on new date
-//                        self.updateItems()
+                        //                        self.updateItems()
                     }) {
                         Image(systemName: "chevron.right")
                             .padding()
@@ -54,27 +54,35 @@ struct ExerciseListView: View {
                 }
                 
                 List {
-                    ForEach(viewModel.exerciseList, id: \.id) { exercise in
-                        let exerciseViewModel = ExerciseViewModel(exercise: exercise)
-                        let exerciseView = ExerciseView(viewModel: exerciseViewModel)
-                        
-                        NavigationLink(destination: exerciseView) {
-                            VStack(alignment: .leading) {
-                                Text(exercise.name ?? "no name")
-                                HStack {
-                                    Text(exercise.type?.rawValue.capitalized ?? "no type")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
+                    ForEach(0 ..< viewModel.exerciseList.count, id: \.self) { index in
+                        if index % 4 == 0 {
+                            // Display session label above the list
+                            Section(header: Text("Session \(index / 4 + 1)")) {
+                                ForEach(index ..< min(index + 4, viewModel.exerciseList.count), id: \.self) { innerIndex in
+                                    let exercise = viewModel.exerciseList[innerIndex]
+                                    let exerciseViewModel = ExerciseViewModel(exercise: exercise)
+                                    let exerciseView = ExerciseView(viewModel: exerciseViewModel)
                                     
-                                    Text(exercise.hand == true ? "left" : "right" )
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                    
+                                    NavigationLink(destination: exerciseView) {
+                                        VStack(alignment: .leading) {
+                                            Text(exercise.name ?? "no name")
+                                            HStack {
+                                                Text(exercise.type?.rawValue.capitalized ?? "no type")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.secondary)
+                                                
+                                                Text(exercise.hand == true ? "left" : "right" )
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.secondary)
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                
                 Spacer()
             }
             .tabItem {
