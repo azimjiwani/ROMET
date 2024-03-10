@@ -17,7 +17,7 @@ struct CustomSlider: View {
                 HStack(spacing: (UIScreen.main.bounds.width - 160) / 55) { // Adjusted spacing to account for padding
                     ForEach(0...50, id: \.self) { index in
                         Rectangle()
-                            .fill(index % 5 == 0 ? Color.black.opacity(0.55) : Color.black.opacity(0.3))
+                            .fill(index % 5 == 0 ? Colours.primaryTextColour.opacity(0.55) : Colours.primaryTextColour.opacity(0.3))
                             .frame(width: 2, height: index % 5  == 0 ? 20 : 12)
                     }
                 }

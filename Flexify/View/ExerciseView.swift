@@ -13,6 +13,8 @@ struct ExerciseView: View {
     var viewModel: ExerciseViewModel
     var quickPose = QuickPose(sdkKey: Constants.sdkKey)
     
+    @Binding var goBackToRoot: Bool
+    
     var point1: QuickPose.Landmarks.Body {
         switch viewModel.exercise?.type {
         case .wristFlexion, .wristExtension, .ulnarDeviation, .radialDeviation:
@@ -166,24 +168,16 @@ struct ExerciseView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                HStack{
-                    Spacer()
-                    Button {
-                        print("Info button tapped")
-                    } label: {
-                        Image(systemName: "info.circle")
-                    }
-                }
-                .offset(y: -32)
-                
+                Spacer(minLength: 32)
                 if let reps = viewModel.exercise?.reps, let sets = viewModel.exercise?.sets {
                     Text("Sets: \(sets) | Reps: \(reps)")
                         .offset(y: -32)
+                        .foregroundStyle(Colours.primaryTextColour)
                 }
                 
                 ZStack(alignment: .top) {
                     QuickPoseCameraView(useFrontCamera: true, delegate: quickPose, videoGravity: .resizeAspect)
-                    QuickPoseOverlayView(overlayImage: $overlayImage, contentMode: .fit)
+                    QuickPoseOverlayView(overlayImage: $overlayImage, contentMode: .fill)
                 }
                 .offset(y: -32)
                 .overlay(alignment: .topLeading) {
@@ -277,29 +271,28 @@ struct ExerciseView: View {
                     print("stopped")
                 }
                 HStack {
-                    
                     Text("Angle: \(max(jointAngle, 0))")
                         .font(.system(size: 16, weight: .semibold))
                         .onChange(of: jointAngle) { newValue in
                             maxAngle = max(Float(jointAngle), maxAngle)
                         }
-                    //                       .foregroundColor(.white)
-                    
+                        .foregroundStyle(Colours.primaryTextColour)
                     
                     Text("Reps: \(repCount)")
                         .font(.system(size: 16, weight: .semibold))
-                    //                        .foregroundColor(.white)
+                        .foregroundStyle(Colours.primaryTextColour)
                     
                     Text("Sets: \(setCount)")
                         .font(.system(size: 16, weight: .semibold))
-                    //                        .foregroundColor(.white)
+                        .foregroundStyle(Colours.primaryTextColour)
                 }
-                NavigationLink(destination: ExerciseSummaryView(viewModel: viewModel)) {
+                
+                NavigationLink(destination: ExerciseSummaryView(goBackToRoot: self.$goBackToRoot, viewModel: viewModel).toolbar(.hidden, for: .tabBar)) {
                     Text("Complete Exercise")
                         .font(.headline)
-                        .foregroundColor(.white)
+                        .foregroundStyle(Colours.buttonTextColour)
                         .padding()
-                        .background(Color.blue)
+                        .background(Colours.buttonBackgroundColour)
                         .frame(height: 40)
                         .cornerRadius(20)
                 }.simultaneousGesture(TapGesture().onEnded{
@@ -308,6 +301,7 @@ struct ExerciseView: View {
                 Spacer()
             }
         }
+        .background(Colours.backgroundColour)
         .navigationBarTitle(viewModel.exercise?.name ?? "no name")
     }
 }

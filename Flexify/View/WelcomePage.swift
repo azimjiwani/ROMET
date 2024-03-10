@@ -6,30 +6,36 @@
 //
 
 import SwiftUI
-import AVFoundation
 
 struct WelcomePage: View {
     @State var cameraPermissionGranted = false
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Welcome to ROMET")
-                    .font(.largeTitle)
-                    .padding()
+            ZStack {
+                Colours.backgroundColour
+                    .ignoresSafeArea()
                 
-                // Button to navigate to the next screen
-                NavigationLink(destination: ExerciseListView()) {
-                    Text("Get Started")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                VStack {
+                    Text("Welcome to ROMET")
+                        .font(.largeTitle)
+                        .foregroundStyle(Colours.primaryTextColour)
                         .padding()
-                        .background(Color.blue)
-                        .frame(height: 40)
-                        .cornerRadius(20)
+                    
+                    // Button to navigate to the next screen
+                    NavigationLink(destination: ExerciseListView().toolbar(.visible, for: .tabBar)) {
+                        Text("Get Started")
+                            .font(.headline)
+                            .foregroundStyle(Colours.buttonTextColour)
+                            .padding()
+                            .background(Colours.buttonBackgroundColour)
+                            .frame(height: 40)
+                            .cornerRadius(20)
+                    }
+                    .padding()
                 }
-                .padding()
             }
-            .toolbar(.hidden, for: .navigationBar)
         }
+        .toolbar(.hidden, for: .navigationBar)
     }
 }
+

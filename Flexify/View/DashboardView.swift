@@ -14,6 +14,7 @@ struct DashboardView: View {
                 Text("Dashboard")
                     .font(.largeTitle)
                     .fontWeight(.bold)
+                    .foregroundStyle(Colours.primaryTextColour)
                     .padding(20)
                 Spacer()
             }
@@ -27,8 +28,8 @@ struct DashboardView: View {
                     .scaledToFit()
                     
                     HStack {
-                        CustomGaugeTileView(currVal: 40, minVal: 0, maxVal: 45, label1: "Flexion", exerciseName: "Wrist Flexion")
-                        CustomGaugeTileView(currVal: 30.4, minVal: 0, maxVal: 45, label1: "Extension", exerciseName: "Wrist Extension")
+                        CustomGaugeTileView(currVal: 40, minVal: 0, maxVal: 45, label1: "Wrist", label2: "Flexion", exerciseName: "Wrist Flexion")
+                        CustomGaugeTileView(currVal: 30.4, minVal: 0, maxVal: 45, label1: "Wrist", label2: "Extension", exerciseName: "Wrist Extension")
                     }
                     .scaledToFit()
                     
@@ -106,16 +107,20 @@ struct CustomGaugeView: View {
                 if exerciseName != nil {
                     Text("\(currVal.formatted(.number))")
                         .font(.system(size: 32))
+                        .foregroundStyle(Colours.secondaryTextColour)
                     Text("/\(maxVal.formatted(.number))°")
                         .font(.system(size: 16))
                         .baselineOffset(6)
+                        .foregroundStyle(Colours.secondaryTextColour)
                     
                 } else {
                     Text("\(currVal.formatted(.number))")
                         .font(.system(size: 32))
+                        .foregroundStyle(Colours.secondaryTextColour)
                     Text("/\(maxVal.formatted(.number))")
                         .font(.system(size: 16))
                         .baselineOffset(6)
+                        .foregroundStyle(Colours.secondaryTextColour)
                 }
             }
         }
@@ -124,7 +129,7 @@ struct CustomGaugeView: View {
 }
 
 struct SpeedometerGaugeStyle: GaugeStyle {
-    private var purpleGradient = LinearGradient(gradient: Gradient(colors: [ Color(red: 207/255, green: 150/255, blue: 207/255), Color(red: 107/255, green: 116/255, blue: 179/255) ]), startPoint: .trailing, endPoint: .leading)
+    private var purpleGradient = LinearGradient(gradient: Gradient(colors: [ Colours.gaugeLightColour, Colours.gaugeDarkColour ]), startPoint: .trailing, endPoint: .leading)
     
     private var label1: String
     private var label2: String?
@@ -141,11 +146,11 @@ struct SpeedometerGaugeStyle: GaugeStyle {
     func makeBody(configuration: Configuration) -> some View {
         ZStack {
             Circle()
-                .foregroundColor(Color(.systemGray6))
+                .foregroundColor(.white)
             
             Circle()
                 .trim(from: 0, to: 0.75 * maxVal)
-                .stroke(.gray, lineWidth: 20)
+                .stroke(Colours.backgroundColour, lineWidth: 20)
                 .rotationEffect(.degrees(135))
             
             Circle()
@@ -155,7 +160,7 @@ struct SpeedometerGaugeStyle: GaugeStyle {
             
             Circle()
                 .trim(from: 0.75, to: 1)
-                .stroke(.black, lineWidth: 20)
+                .stroke(.white, lineWidth: 20)
                 .rotationEffect(.degrees(135))
             
             //            Circle()
@@ -166,14 +171,14 @@ struct SpeedometerGaugeStyle: GaugeStyle {
             VStack {
                 configuration.currentValueLabel
                     .font(.system(size: 80, weight: .bold, design: .rounded))
-                    .foregroundColor(.gray)
+                    .foregroundStyle(Colours.primaryTextColour)
                 Text(label1)
                     .font(.system(.body, design: .rounded))
-                    .foregroundColor(.gray)
+                    .foregroundStyle(Colours.primaryTextColour)
                 if let label2 = label2 {
                     Text(label2)
                         .font(.system(.body, design: .rounded))
-                        .foregroundColor(.gray)
+                        .foregroundStyle(Colours.primaryTextColour)
                 }
             }
             

@@ -19,11 +19,11 @@ struct RatingView: View {
             HStack {
                 Text(title)
                     .padding(.leading, 15)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Colours.primaryTextColour)
                 Spacer()
                 Text("\(rating, specifier: "%.0f")")
                     .padding(.trailing, 15)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Colours.primaryTextColour)
             }
             
             CustomSlider(rating: $rating, onValueChanged: { newValue in
@@ -31,7 +31,7 @@ struct RatingView: View {
             })
         }
         .frame(height: 100)
-        .background(.white)
+        .background(Colours.listBackgroundColour)
         .cornerRadius(15)
         .padding(.horizontal, 15)
     }

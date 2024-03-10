@@ -41,7 +41,7 @@ struct SliderView: View {
                 HStack {
                     ZStack {
                         Rectangle()
-                            .foregroundColor(self.thumbColor)
+                            .foregroundColor(Colours.secondaryTextColour)
                             .frame(width: thumbWidth, height: thumbHeight)
                             .offset(x: min(max(sliderVal, 0), gr.size.width - thumbWidth)) // Ensure thumb stays within track bounds
                         
