@@ -11,8 +11,6 @@ struct ExerciseListView: View {
     @ObservedObject var viewModel = ExerciseListViewModel()
     @State private var currentDate = Date()
     
-    @State private var goBackToRoot: Bool = false
-    
     func formattedDate(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, yyyy"
@@ -61,9 +59,9 @@ struct ExerciseListView: View {
                                 ForEach(index ..< min(index + 4, viewModel.exerciseList.count), id: \.self) { innerIndex in
                                     let exercise = viewModel.exerciseList[innerIndex]
                                     let exerciseViewModel = ExerciseViewModel(exercise: exercise)
-                                    let instructionView = InstructionsView(viewModel: exerciseViewModel, goBackToRoot: self.$goBackToRoot)
+                                    let instructionView = InstructionsView(viewModel: exerciseViewModel)
                                     
-                                    NavigationLink(destination: InstructionsView(viewModel: exerciseViewModel, goBackToRoot: self.$goBackToRoot).toolbar(.hidden, for: .tabBar), isActive: $goBackToRoot) {
+                                    NavigationLink(destination: instructionView.toolbar(.hidden, for: .tabBar)) {
                                         HStack {
                                             VStack(alignment: .leading) {
                                                 Text(exercise.name ?? "no name")

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct InstructionsView: View {
     var viewModel: ExerciseViewModel
-    @Binding var goBackToRoot: Bool
     
     var body: some View {
         ZStack {
@@ -21,7 +20,7 @@ struct InstructionsView: View {
                     .padding(20)
                     .foregroundStyle(Colours.primaryTextColour)
                 Spacer()
-                NavigationLink(destination: ExerciseView(viewModel: viewModel, goBackToRoot: self.$goBackToRoot).toolbar(.hidden, for: .tabBar)) {
+                NavigationLink(destination: ExerciseView(viewModel: viewModel).toolbar(.hidden, for: .tabBar)) {
                     Text("Proceed To Exercise")
                         .font(.headline)
                         .foregroundStyle(Colours.buttonTextColour)

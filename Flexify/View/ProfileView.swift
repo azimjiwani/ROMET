@@ -18,6 +18,7 @@ struct ProfileView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(20)
+                    .foregroundStyle(Colours.primaryTextColour)
                 Spacer()
             }
             
@@ -25,21 +26,25 @@ struct ProfileView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("First Name")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .font(.body)
+                        .foregroundColor(Colours.secondaryTextColour)
                     
                     Text("BIPIN")
-                        .font(.headline)
+                        .font(.title3)
+                        .bold()
+                        .foregroundStyle(Colours.primaryTextColour)
                 }
                 .padding(.trailing, 10)
                 
                 VStack(alignment: .leading) {
                     Text("Last Name")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .font(.body)
+                        .foregroundColor(Colours.secondaryTextColour)
                     
                     Text("KUMAR")
-                        .font(.headline)
+                        .font(.title3)
+                        .bold()
+                        .foregroundStyle(Colours.primaryTextColour)
                 }
                 
                 Spacer()
@@ -51,11 +56,13 @@ struct ProfileView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Username")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .font(.body)
+                        .foregroundColor(Colours.secondaryTextColour)
                     
                     Text("bipinkumar")
-                        .font(.headline)
+                        .font(.title3)
+                        .bold()
+                        .foregroundStyle(Colours.primaryTextColour)
                 }
                 .padding(.trailing, 10)
                 
@@ -68,21 +75,25 @@ struct ProfileView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Injured Hand")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .font(.body)
+                        .foregroundColor(Colours.secondaryTextColour)
                     
                     Text("Left")
-                        .font(.headline)
+                        .font(.title3)
+                        .bold()
+                        .foregroundStyle(Colours.primaryTextColour)
                 }
                 .padding(.trailing, 10)
                 
                 VStack(alignment: .leading) {
                     Text("Injury Type")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .font(.body)
+                        .foregroundColor(Colours.secondaryTextColour)
                     
                     Text("DRF")
-                        .font(.headline)
+                        .font(.title3)
+                        .bold()
+                        .foregroundStyle(Colours.primaryTextColour)
                 }
                 Spacer()
             }
@@ -93,21 +104,25 @@ struct ProfileView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Rehab Start Date")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .font(.body)
+                        .foregroundColor(Colours.secondaryTextColour)
                     
                     Text("Today")
-                        .font(.headline)
+                        .font(.title3)
+                        .bold()
+                        .foregroundStyle(Colours.primaryTextColour)
                 }
                 .padding(.trailing, 10)
                 
                 VStack(alignment: .leading) {
                     Text("Rehab End date")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .font(.body)
+                        .foregroundColor(Colours.secondaryTextColour)
                     
                     Text("Tomorrow")
-                        .font(.headline)
+                        .font(.title3)
+                        .bold()
+                        .foregroundStyle(Colours.primaryTextColour)
                 }
                 Spacer()
             }
@@ -118,11 +133,14 @@ struct ProfileView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Goals")
-                        .font(.headline)
+                        .font(.title3)
                         .padding(.top, 20)
+                        .bold()
+                        .foregroundStyle(Colours.secondaryTextColour)
                     
                     ForEach(0..<goals.count, id: \.self) { index in
                         Text("\(index + 1). \(goals[index])")
+                            .foregroundStyle(Colours.primaryTextColour)
                     }
                 }
                 Spacer()

@@ -13,8 +13,6 @@ struct ExerciseView: View {
     var viewModel: ExerciseViewModel
     var quickPose = QuickPose(sdkKey: Constants.sdkKey)
     
-    @Binding var goBackToRoot: Bool
-    
     var point1: QuickPose.Landmarks.Body {
         switch viewModel.exercise?.type {
         case .wristFlexion, .wristExtension, .ulnarDeviation, .radialDeviation:
@@ -287,7 +285,7 @@ struct ExerciseView: View {
                         .foregroundStyle(Colours.primaryTextColour)
                 }
                 
-                NavigationLink(destination: ExerciseSummaryView(goBackToRoot: self.$goBackToRoot, viewModel: viewModel).toolbar(.hidden, for: .tabBar)) {
+                NavigationLink(destination: ExerciseSummaryView(viewModel: viewModel).toolbar(.hidden, for: .tabBar)) {
                     Text("Complete Exercise")
                         .font(.headline)
                         .foregroundStyle(Colours.buttonTextColour)
