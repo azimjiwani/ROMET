@@ -9,11 +9,17 @@ import SwiftUI
 
 struct ExerciseListView: View {
     @ObservedObject var viewModel = ExerciseListViewModel()
-    @State private var currentDate = Date()
+    @State private var date = Date()
     
     func formattedDate(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, yyyy"
+        return formatter.string(from: date)
+    }
+    
+    func formatDateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: date)
     }
     
@@ -30,19 +36,21 @@ struct ExerciseListView: View {
                 }
                 HStack {
                     Button(action: {
-                        self.currentDate = Calendar.current.date(byAdding: .day, value: -1, to: self.currentDate) ?? self.currentDate
+                        self.date = Calendar.current.date(byAdding: .day, value: -1, to: self.date) ?? self.date
+                        viewModel.getExercises(date: formatDateToString(date: self.date))
                     }) {
                         Image(systemName: "chevron.left")
                             .padding()
                     }
                     
-                    Text("\(formattedDate(date: currentDate))")
+                    Text("\(formattedDate(date: date))")
                         .font(.title)
                         .foregroundStyle(Colours.secondaryTextColour)
                         .padding()
                     
                     Button(action: {
-                        self.currentDate = Calendar.current.date(byAdding: .day, value: 1, to: self.currentDate) ?? self.currentDate
+                        self.date = Calendar.current.date(byAdding: .day, value: 1, to: self.date) ?? self.date
+                        viewModel.getExercises(date: formatDateToString(date: self.date))
                     }) {
                         Image(systemName: "chevron.right")
                             .padding()
@@ -61,7 +69,24 @@ struct ExerciseListView: View {
                                     let exerciseViewModel = ExerciseViewModel(exercise: exercise)
                                     let instructionView = InstructionsView(viewModel: exerciseViewModel)
                                     
-                                    NavigationLink(destination: instructionView.toolbar(.hidden, for: .tabBar)) {
+                                    // Check if the exercise is not completed before making the row tappable
+                                    if exercise.isCompleted == false {
+                                        NavigationLink(destination: instructionView.toolbar(.hidden, for: .tabBar)) {
+                                            HStack {
+                                                VStack(alignment: .leading) {
+                                                    Text(exercise.name ?? "no name")
+                                                        .foregroundStyle(Colours.primaryTextColour)
+                                                    
+                                                    Text(exercise.hand == true ? "left" : "right" )
+                                                        .font(.subheadline)
+                                                        .foregroundStyle(Colours.secondaryTextColour)
+                                                }
+                                                Spacer()
+                                            }
+                                        }
+                                        .listRowBackground(Colours.listBackgroundColour)
+                                    } else {
+                                        // Display non-tappable row for completed exercises
                                         HStack {
                                             VStack(alignment: .leading) {
                                                 Text(exercise.name ?? "no name")
@@ -72,16 +97,20 @@ struct ExerciseListView: View {
                                                     .foregroundStyle(Colours.secondaryTextColour)
                                             }
                                             Spacer()
+                                            Image(systemName: "checkmark.circle")
+                                                .foregroundStyle(Colours.primaryTextColour)
+                                                .padding()
                                         }
+                                        .listRowBackground(Colours.listBackgroundColour)
                                     }
-                                    .listRowBackground(Colours.listBackgroundColour)
                                 }
                             }
                         }
                     }
                 }
                 .scrollContentBackground(.hidden)
-                .background(Colours.backgroundColour) // Set background color for list
+                .background(Colours.backgroundColour)
+
                 
                 
                 Spacer()
@@ -89,7 +118,7 @@ struct ExerciseListView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(12)
             .onAppear {
-                viewModel.getExercises()
+                viewModel.getExercises(date: formatDateToString(date: self.date))
             }
             
             .tabItem {

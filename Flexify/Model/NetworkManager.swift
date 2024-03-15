@@ -12,9 +12,9 @@ class NetworkManager {
     
     let backendURL = Constants.backendURL
     
-    func fetchExercises(completion: @escaping ([Exercise]?) -> Void) {
+    func fetchExercises(date: String, completion: @escaping ([Exercise]?) -> Void) {
         // Replace the URL with your actual endpoint
-        guard let url = URL(string: "\(backendURL)/get-all-exercises/") else {
+        guard let url = URL(string: "\(backendURL)/get-prescribed-exercises/?userName=\(User.shared.username)&date=\(date)") else {
             completion(nil)
             return
         }
@@ -62,7 +62,7 @@ class NetworkManager {
             let exerciseDict = try JSONSerialization.jsonObject(with: try JSONEncoder().encode(exercise), options: []) as! [String: Any]
             
             // Define the URL for your backend endpoint
-            guard let url = URL(string: "\(backendURL)/upload-completed-exercise/") else {
+            guard let uniqueId = exercise.uniqueId, let url = URL(string: "\(backendURL)/upload-completed-exercise/?uniqueId=\(uniqueId)") else {
                 print("Invalid URL")
                 return
             }

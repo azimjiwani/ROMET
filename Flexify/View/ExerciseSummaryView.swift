@@ -71,7 +71,7 @@ struct ExerciseSummaryView: View {
                                 Text("Max Angle")
                                     .fontWeight(.bold)
                                     .foregroundStyle(Colours.buttonBackgroundColour)
-                                Text("\(maxAngle)")
+                                Text("\(maxAngle)°")
                                     .foregroundStyle(Colours.primaryTextColour)
                             }
                             .padding(.vertical, 10)
