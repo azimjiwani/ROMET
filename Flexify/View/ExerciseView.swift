@@ -13,8 +13,6 @@ struct ExerciseView: View {
     var viewModel: ExerciseViewModel
     var quickPose = QuickPose(sdkKey: Constants.sdkKey)
     
-    @Binding var goBackToRoot: Bool
-    
     var point1: QuickPose.Landmarks.Body {
         switch viewModel.exercise?.type {
         case .wristFlexion, .wristExtension, .ulnarDeviation, .radialDeviation:
@@ -63,13 +61,16 @@ struct ExerciseView: View {
     
     // State variables for rep counting
     @State private var repCount: Int = 0
+    @State private var totalRepCount: Int = 0
     @State private var isRepInProgress: Bool = false
     @State private var previousAngle: CGFloat = 0.0
     
     // State variables for set counting
     @State private var setCount: Int = 0
     
-    @State private var maxAngle: Float = 0.0
+    @State private var maxAngle: Int = 0
+    @State private var runningAverageAngle: Int = 0
+    @State private var angleArray: [Int] = []
     
     @State private var isVisible = false
     
@@ -130,23 +131,38 @@ struct ExerciseView: View {
         if jointAngle < 0 {
             jointAngle = 0
         }
+        
+        if jointAngle <= 90.0 {
+            angleArray.append(Int(jointAngle))
+        }
+
+        // Ensure angleArray has a maximum length of 10
+        if angleArray.count > 10 {
+            angleArray.removeFirst()
+        }
+
+        // Calculate the running average angle if there are elements in angleArray
+        if angleArray.count > 0 {
+            let sumArray = angleArray.reduce(0, +)
+            runningAverageAngle = sumArray / angleArray.count
+        }
     }
     
     func computeRep() {
         // Rep counting logic
         if isRepInProgress {
-            if abs(jointAngle) >= 0 && abs(jointAngle) <= 10 {
+            if jointAngle >= 0 && jointAngle <= 10 {
                 // Rep is completed
                 repCount += 1
+                totalRepCount += 1
                 isRepInProgress = false
             }
         } else {
             // Start rep if the angle exceeds 20 degrees
-            if abs(jointAngle) > 20 {
+            if jointAngle > 20 {
                 isRepInProgress = true
             }
         }
-        
         previousAngle = jointAngle
     }
     
@@ -158,9 +174,7 @@ struct ExerciseView: View {
     }
     
     func prepareForSummary(){
-        if let reps = viewModel.exercise?.reps {
-            viewModel.exercise?.completedReps = (setCount * reps) + repCount
-        }
+        viewModel.exercise?.completedReps = totalRepCount
         viewModel.exercise?.completedSets = setCount
         viewModel.exercise?.maxAngle = maxAngle
     }
@@ -180,20 +194,20 @@ struct ExerciseView: View {
                     QuickPoseOverlayView(overlayImage: $overlayImage, contentMode: .fill)
                 }
                 .offset(y: -32)
-                .overlay(alignment: .topLeading) {
-                    Circle()
-                        .position(x: leftElbowPoint.x, y: leftElbowPoint.y)
-                        .frame(width: 12, height: 12)
-                        .foregroundColor(Color.green.opacity(1.0))
-                    Circle()
-                        .position(x: leftWristPoint.x, y: leftWristPoint.y)
-                        .frame(width: 12, height: 12)
-                        .foregroundColor(Color.green.opacity(1.0))
-                    Circle()
-                        .position(x: leftMCP3Point.x, y: leftMCP3Point.y)
-                        .frame(width: 12, height: 12)
-                        .foregroundColor(Color.green.opacity(1.0))
-                }
+//                .overlay(alignment: .topLeading) {
+//                    Circle()
+//                        .position(x: leftElbowPoint.x, y: leftElbowPoint.y)
+//                        .frame(width: 12, height: 12)
+//                        .foregroundColor(Color.green.opacity(1.0))
+//                    Circle()
+//                        .position(x: leftWristPoint.x, y: leftWristPoint.y)
+//                        .frame(width: 12, height: 12)
+//                        .foregroundColor(Color.green.opacity(1.0))
+//                    Circle()
+//                        .position(x: leftMCP3Point.x, y: leftMCP3Point.y)
+//                        .frame(width: 12, height: 12)
+//                        .foregroundColor(Color.green.opacity(1.0))
+//                }
                 .overlay(alignment: .center) {
                     if setCount == viewModel.exercise?.sets {
                         ZStack {
@@ -231,7 +245,7 @@ struct ExerciseView: View {
                 .onAppear {
                     isVisible = true
                     print("started")
-                    quickPose.start(features: [], onFrame: { status, image, features, feedback, landmarks in
+                    quickPose.start(features: [.showPoints()], onFrame: { status, image, features, feedback, landmarks in
                         overlayImage = image
                         if case .success = status, let landmarks = landmarks {
                             let leftElbow = landmarks.landmark(forBody: point1)
@@ -258,6 +272,8 @@ struct ExerciseView: View {
                                 computeJointAngle(rawAngle: rawAngle)
                                 computeRep()
                                 computeSet()
+                            } else {
+//                                showMoveArmIntoFrameMessage = true
                             }
                             
                         } else {
@@ -271,10 +287,10 @@ struct ExerciseView: View {
                     print("stopped")
                 }
                 HStack {
-                    Text("Angle: \(max(jointAngle, 0))")
+                    Text("Angle: \(max(runningAverageAngle, 0))")
                         .font(.system(size: 16, weight: .semibold))
-                        .onChange(of: jointAngle) { newValue in
-                            maxAngle = max(Float(jointAngle), maxAngle)
+                        .onChange(of: runningAverageAngle) { newValue in
+                            maxAngle = max(runningAverageAngle, maxAngle)
                         }
                         .foregroundStyle(Colours.primaryTextColour)
                     
@@ -287,7 +303,7 @@ struct ExerciseView: View {
                         .foregroundStyle(Colours.primaryTextColour)
                 }
                 
-                NavigationLink(destination: ExerciseSummaryView(goBackToRoot: self.$goBackToRoot, viewModel: viewModel).toolbar(.hidden, for: .tabBar)) {
+                NavigationLink(destination: ExerciseSummaryView(viewModel: viewModel).toolbar(.hidden, for: .tabBar)) {
                     Text("Complete Exercise")
                         .font(.headline)
                         .foregroundStyle(Colours.buttonTextColour)

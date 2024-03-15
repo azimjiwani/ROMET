@@ -11,8 +11,8 @@ import SwiftUI
 class ExerciseListViewModel: ObservableObject {
     @Published var exerciseList = [Exercise]()
 
-    func getExercises() {
-        NetworkManager.shared.fetchExercises() { exercises in
+    func getExercises(date: String) {
+        NetworkManager.shared.fetchExercises(date: date) { exercises in
             if let exercises = exercises {
                 self.exerciseList = exercises
             }

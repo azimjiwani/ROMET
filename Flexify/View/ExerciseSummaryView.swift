@@ -11,9 +11,7 @@ struct ExerciseSummaryView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     @FocusState private var nameIsFocused: Bool
-    
-    @Binding var goBackToRoot: Bool
-    
+        
     var viewModel: ExerciseViewModel
     @State private var painRating: Double = 0.0
     @State private var difficultyRating: Double = 0.0
@@ -73,7 +71,7 @@ struct ExerciseSummaryView: View {
                                 Text("Max Angle")
                                     .fontWeight(.bold)
                                     .foregroundStyle(Colours.buttonBackgroundColour)
-                                Text("\(maxAngle)")
+                                Text("\(maxAngle)°")
                                     .foregroundStyle(Colours.primaryTextColour)
                             }
                             .padding(.vertical, 10)

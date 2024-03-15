@@ -58,7 +58,6 @@ struct GifView: UIViewRepresentable {
 
 struct InstructionsView: View {
     var viewModel: ExerciseViewModel
-    @Binding var goBackToRoot: Bool
     
     var body: some View {
         ZStack {
@@ -304,7 +303,7 @@ struct InstructionsView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 
                 Spacer()
-                NavigationLink(destination: ExerciseView(viewModel: viewModel, goBackToRoot: self.$goBackToRoot).toolbar(.hidden, for: .tabBar)) {
+                NavigationLink(destination: ExerciseView(viewModel: viewModel).toolbar(.hidden, for: .tabBar)) {
                     Text("Proceed To Exercise")
                         .font(.headline)
                         .foregroundStyle(Colours.buttonTextColour)

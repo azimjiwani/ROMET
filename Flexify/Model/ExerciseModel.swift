@@ -18,6 +18,7 @@ enum ExerciseType: String, Codable {
 
 struct Exercise: Identifiable, Codable {
     var id = UUID()
+    let uniqueId: String?
     let type: ExerciseType?
     let name: String?
     let description: String?
@@ -26,17 +27,20 @@ struct Exercise: Identifiable, Codable {
     let hand: Bool?
     var completedSets: Int?
     var completedReps: Int?
-    var maxAngle: Float?
+    var maxAngle: Int?
     var painRating: Int?
     var difficultyRating: Int?
     var notes: String?
+    var isCompleted: Bool?
     
     init(json: [String: Any]) {
+        self.uniqueId = json["uniqueId"] as? String
         self.name = json["exerciseName"] as? String
         self.description = json["description"] as? String
         self.sets = json["sets"] as? Int
         self.reps = json["reps"] as? Int
         self.hand = json["hand"] as? Bool
+        self.isCompleted = json["isCompleted"] as? Bool
         
         // Map exerciseName to ExerciseType
         if let exerciseName = name?.toCamelCase() {
@@ -46,7 +50,7 @@ struct Exercise: Identifiable, Codable {
         }
         self.completedReps = 0
         self.completedSets = 0
-        self.maxAngle = 0.0
+        self.maxAngle = 0
         self.painRating = 0
         self.difficultyRating = 0
         self.notes = ""

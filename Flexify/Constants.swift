@@ -22,5 +22,9 @@ enum Colours {
     static let listBackgroundColour: Color = Color("ListBackgroundColour")
     static let gaugeLightColour: Color = Color("GaugeLightColour")
     static let gaugeDarkColour: Color = Color("GaugeDarkColour")
+}
 
+class User {
+    static let shared = User()
+    var username: String = ""
 }
