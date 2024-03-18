@@ -71,9 +71,7 @@ struct ExerciseView: View {
     @State private var maxAngle: Int = 0
     @State private var runningAverageAngle: Int = 0
     @State private var angleArray: [Int] = []
-    
-    @State private var isVisible = false
-    
+        
     @State private var showCompleteMessage = false
     
     private func showComplete() {
@@ -145,6 +143,7 @@ struct ExerciseView: View {
         if angleArray.count > 0 {
             let sumArray = angleArray.reduce(0, +)
             runningAverageAngle = sumArray / angleArray.count
+            maxAngle = max(runningAverageAngle, maxAngle)
         }
     }
     
@@ -194,20 +193,6 @@ struct ExerciseView: View {
                     QuickPoseOverlayView(overlayImage: $overlayImage, contentMode: .fill)
                 }
                 .offset(y: -32)
-//                .overlay(alignment: .topLeading) {
-//                    Circle()
-//                        .position(x: leftElbowPoint.x, y: leftElbowPoint.y)
-//                        .frame(width: 12, height: 12)
-//                        .foregroundColor(Color.green.opacity(1.0))
-//                    Circle()
-//                        .position(x: leftWristPoint.x, y: leftWristPoint.y)
-//                        .frame(width: 12, height: 12)
-//                        .foregroundColor(Color.green.opacity(1.0))
-//                    Circle()
-//                        .position(x: leftMCP3Point.x, y: leftMCP3Point.y)
-//                        .frame(width: 12, height: 12)
-//                        .foregroundColor(Color.green.opacity(1.0))
-//                }
                 .overlay(alignment: .center) {
                     if setCount == viewModel.exercise?.sets {
                         ZStack {
@@ -235,15 +220,7 @@ struct ExerciseView: View {
                 }
                 .frame(width: geometry.size.width)
                 .edgesIgnoringSafeArea(.all)
-                .onChange(of: isVisible) { newValue in
-                    if !newValue {
-                        // View is no longer visible, perform cleanup or stop ongoing processes
-                        quickPose.stop()
-                        print("stopped")
-                    }
-                }
                 .onAppear {
-                    isVisible = true
                     print("started")
                     quickPose.start(features: [.showPoints()], onFrame: { status, image, features, feedback, landmarks in
                         overlayImage = image
@@ -282,16 +259,12 @@ struct ExerciseView: View {
                     })
                 }
                 .onDisappear {
-                    isVisible = false
                     quickPose.stop()
                     print("stopped")
                 }
                 HStack {
-                    Text("Angle: \(max(runningAverageAngle, 0))")
+                    Text("Angle: \(max(runningAverageAngle, 0))°")
                         .font(.system(size: 16, weight: .semibold))
-                        .onChange(of: runningAverageAngle) { newValue in
-                            maxAngle = max(runningAverageAngle, maxAngle)
-                        }
                         .foregroundStyle(Colours.primaryTextColour)
                     
                     Text("Reps: \(repCount)")

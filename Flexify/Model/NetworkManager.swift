@@ -12,6 +12,10 @@ class NetworkManager {
     
     let backendURL = Constants.backendURL
     
+    func fetchUserInfo(username: String) {
+        
+    }
+    
     func fetchExercises(date: String, completion: @escaping ([Exercise]?) -> Void) {
         // Replace the URL with your actual endpoint
         guard let url = URL(string: "\(backendURL)/get-prescribed-exercises/?userName=\(User.shared.username)&date=\(date)") else {
