@@ -51,14 +51,19 @@ struct WelcomePage: View {
                     .ignoresSafeArea()
                 
                 VStack {
-                    Spacer()
+                    Spacer(minLength: 40)
                     
+                    Image(.logo)
+                        .resizable()
+                        .frame(width: 250, height: 250)
+                                        
                     Text("Welcome to ROMET")
                         .font(.largeTitle)
                         .foregroundStyle(Colours.primaryTextColour)
                         .padding()
                     
                     TextField("", text: $username, prompt: Text("Enter username").foregroundStyle(Colours.primaryTextColour))
+                        .multilineTextAlignment(.center)
                         .foregroundColor(Colours.primaryTextColour)
                         .padding(10)
                         .overlay {
@@ -89,6 +94,8 @@ struct WelcomePage: View {
                     .cornerRadius(25)
                     .buttonStyle(.plain)
                     
+                    Spacer()
+                    
                     // Use NavigationLink with tag and selection to programmatically navigate
                     NavigationLink(destination: ExerciseListView(), isActive: $shouldNavigate) {
                         EmptyView()
@@ -96,6 +103,8 @@ struct WelcomePage: View {
                     .hidden()
                 }
             }
-        }.toolbar(.hidden, for: .navigationBar)
+        }
+        .background(Colours.backgroundColour)
+        .toolbar(.hidden, for: .navigationBar)
     }
 }
