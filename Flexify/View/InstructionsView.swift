@@ -106,7 +106,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("1. Begin with your wrist in a neutral position, with the ulnar side (pinky side) facing the camera neither flexed nor extended. Your fingers should be relaxed")
+                                    Text("1. Begin with your wrist in a neutral position, positioning the ulnar side (pinky side) toward the camera, ensuring it's neither flexed nor extended. Keep your fingers relaxed.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                 }
@@ -114,7 +114,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("2. Slowly bend your wrist forward, bringing your palm closer to your forearm. Hold the position for up to 3 seconds")
+                                    Text("2. Slowly bend your wrist forward, drawing your palm closer to your forearm. Hold this position for up to 3 seconds.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -123,7 +123,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("3. Slowly bend your wrist backward to return to neutral position. Repeat this motion as desired")
+                                    Text("3. Gradually bend your wrist backward, returning it to the neutral position. Repeat this motion as desired.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -149,7 +149,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("1. Begin with your wrist in a neutral position, with the ulnar side (pinky side) facing the camera neither flexed nor extended. Your fingers should be relaxed")
+                                    Text("1. Begin with your wrist in a neutral position, positioning the ulnar side (pinky side) toward the camera, ensuring it's neither flexed nor extended. Keep your fingers relaxed.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -158,7 +158,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("2. Slowly bend your wrist forward, bringing your palm closer to your forearm. Hold the position for up to 3 seconds")
+                                    Text("2. Slowly bend your wrist forward, drawing your palm closer to your forearm. Hold this position for up to 3 seconds.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -167,7 +167,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("3. Slowly bend your wrist backward to return to neutral position. Repeat this motion as desired")
+                                    Text("3. Gradually bend your wrist backward, returning it to the neutral position. Repeat this motion as desired.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -196,7 +196,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("1. Begin with your wrist in a neutral position, with the ulnar side (pinky side) facing the camera neither flexed nor extended. Your fingers should be relaxed")
+                                    Text("1. Begin with your wrist in a neutral position, positioning the ulnar side (pinky side) toward the camera, ensuring it's neither flexed nor extended. Keep your fingers relaxed.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -205,7 +205,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("2. Slowly bend your wrist backward, bringing the back of your hand closer to your forearm.Hold the position for up to 3 seconds")
+                                    Text("2. Slowly bend your wrist backward, bringing the back of your hand closer to your forearm. Hold the position for up to 3 seconds.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -214,7 +214,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("3. Slowly bend your wrist forward to return to neutral position. Repeat this motion as desired")
+                                    Text("3. Gradually bend your wrist forward to return to the neutral position. Repeat this motion as desired.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -240,7 +240,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("1. Begin with your wrist in a neutral position, with the ulnar side (pinky side) facing the camera neither flexed nor extended. Your fingers should be relaxed")
+                                    Text("1. Begin with your wrist in a neutral position, positioning the ulnar side (pinky side) toward the camera, ensuring it's neither flexed nor extended. Keep your fingers relaxed.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -249,7 +249,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("2. Slowly bend your wrist backward, bringing the back of your hand closer to your forearm.Hold the position for up to 3 seconds")
+                                    Text("2. Slowly bend your wrist backward, bringing the back of your hand closer to your forearm. Hold the position for up to 3 seconds.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -258,7 +258,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("3. Slowly bend your wrist forward to return to neutral position. Repeat this motion as desired")
+                                    Text("3. Gradually bend your wrist forward to return to the neutral position. Repeat this motion as desired.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -286,7 +286,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("1. Begin with your wrist in a neutral position, with the back of hand facing camera neither deviated towards the ulnar side (pinky side) nor the radial side (thumb side). Keep your fingers relaxed")
+                                    Text("1. Begin with your wrist in a neutral position, positioning the back of your hand to face the camera, ensuring it is neither deviated towards the ulnar side (pinky side) nor the radial side (thumb side). Keep your fingers relaxed.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -295,7 +295,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("2. Slowly tilt your wrist towards the ulnar side, moving your hand so that your pinky side moves closer to your forearm. Hold this position for up to 3 seconds")
+                                    Text("2. Slowly tilt your wrist towards the ulnar side, moving your hand so that the pinky side comes closer to your forearm. Hold this position for up to 3 seconds.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -304,7 +304,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("3. Slowly tilt your wrist away from the ulnar side to return to neutral position. Repeat this motion as desired")
+                                    Text("3. Gradually tilt your wrist away from the ulnar side to return to the neutral position. Repeat this motion as desired.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -330,7 +330,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("1. Begin with your wrist in a neutral position, with the back of hand facing camera neither deviated towards the ulnar side (pinky side) nor the radial side (thumb side). Keep your fingers relaxed")
+                                    Text("1. Begin with your wrist in a neutral position, positioning the back of your hand to face the camera, ensuring it is neither deviated towards the ulnar side (pinky side) nor the radial side (thumb side). Keep your fingers relaxed.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -339,7 +339,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("2. Slowly tilt your wrist towards the ulnar side, moving your hand so that your pinky side moves closer to your forearm. Hold this position for up to 3 seconds")
+                                    Text("2. Slowly tilt your wrist towards the ulnar side, moving your hand so that the pinky side comes closer to your forearm. Hold this position for up to 3 seconds.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -348,7 +348,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("3. Slowly tilt your wrist away from the ulnar side to return to neutral position. Repeat this motion as desired")
+                                    Text("3. Gradually tilt your wrist away from the ulnar side to return to the neutral position. Repeat this motion as desired.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -377,7 +377,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("1. Begin with your wrist in a neutral position, with the palm facing camera neither deviated towards the ulnar side (pinky side) nor the radial side (thumb side). Keep your fingers relaxed")
+                                    Text("1. Begin with your wrist in a neutral position, positioning the palm to face the camera, ensuring it is neither deviated towards the ulnar side (pinky side) nor the radial side (thumb side). Keep your fingers relaxed.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -386,7 +386,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("2. Slowly tilt your wrist towards the radial side, moving your hand so that your thumb side moves closer to your forearm. Hold this position for up to 3 seconds")
+                                    Text("2. Slowly tilt your wrist towards the radial side, moving your hand so that the thumb side comes closer to your forearm. Hold this position for up to 3 seconds.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -395,7 +395,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("3. Slowly tilt your wrist away from the radial side to return to neutral position. Repeat this motion as desired")
+                                    Text("3. Gradually tilt your wrist away from the radial side to return to the neutral position. Repeat this motion as desired.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -421,7 +421,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("1. Begin with your wrist in a neutral position, with the palm facing camera neither deviated towards the ulnar side (pinky side) nor the radial side (thumb side). Keep your fingers relaxed")
+                                    Text("1. Begin with your wrist in a neutral position, positioning the palm to face the camera, ensuring it is neither deviated towards the ulnar side (pinky side) nor the radial side (thumb side). Keep your fingers relaxed.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -430,7 +430,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("2. Slowly tilt your wrist towards the radial side, moving your hand so that your thumb side moves closer to your forearm. Hold this position for up to 3 seconds")
+                                    Text("2. Slowly tilt your wrist towards the radial side, moving your hand so that the thumb side comes closer to your forearm. Hold this position for up to 3 seconds.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
@@ -439,7 +439,7 @@ struct InstructionsView: View {
                                 .padding(.bottom, 10)
                                 
                                 HStack {
-                                    Text("3. Slowly tilt your wrist away from the radial side to return to neutral position. Repeat this motion as desired")
+                                    Text("3. Gradually tilt your wrist away from the radial side to return to the neutral position. Repeat this motion as desired.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
                                     Spacer()
