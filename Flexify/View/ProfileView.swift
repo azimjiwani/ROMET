@@ -28,7 +28,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text(viewModel.profileData?.firstName ?? "None")
+                    Text(viewModel.profileData?.firstName ?? "NULL")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -40,7 +40,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text(viewModel.profileData?.lastName ?? "None")
+                    Text(viewModel.profileData?.lastName ?? "NULL")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -58,7 +58,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text(viewModel.profileData?.username ?? "None")
+                    Text(viewModel.profileData?.username ?? "NULL")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -77,7 +77,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text(viewModel.profileData?.injuredHand ?? "None")
+                    Text(viewModel.profileData?.injuredHand ?? "NULL")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -89,7 +89,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text(viewModel.profileData?.injuryType ?? "None")
+                    Text(viewModel.profileData?.injuryType ?? "NULL")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -106,7 +106,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text(viewModel.profileData?.rehabStartDate ?? "None")
+                    Text(viewModel.profileData?.rehabStartDate ?? "NULL")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -118,7 +118,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text(viewModel.profileData?.rehabEndDate ?? "None")
+                    Text(viewModel.profileData?.rehabEndDate ?? "NULL")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -137,12 +137,16 @@ struct ProfileView: View {
                         .bold()
                         .foregroundStyle(Colours.secondaryTextColour)
                     
-                    if let goals = viewModel.profileData?.goals {
-                        
-                        ForEach(0..<(goals.count), id: \.self) { index in
-                            Text("\(index + 1). \(goals[index])")
-                                .foregroundStyle(Colours.primaryTextColour)
-                        }
+                    if let goal1 = viewModel.profileData?.goal1 {
+                        Text("1. \(goal1)")
+                    }
+                    
+                    if let goal2 = viewModel.profileData?.goal2 {
+                        Text("2. \(goal2)")
+                    }
+                    
+                    if let goal3 = viewModel.profileData?.goal3 {
+                        Text("3. \(goal3)")
                     }
                 }
                 Spacer()

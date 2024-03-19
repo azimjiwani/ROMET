@@ -45,16 +45,20 @@ struct UserProfile: Codable {
     let injuryType: String?
     let rehabStartDate: String?
     let rehabEndDate: String?
-    let goals: [String]?
+    let goal1: String?
+    let goal2: String?
+    let goal3: String?
         
     init(json: [String: Any]) {
         self.username = json["userName"] as? String
         self.firstName = json["firstName"] as? String
         self.lastName = json["lastName"] as? String
-        self.injuredHand = json["injuredHand"] as? String
-        self.injuryType = json["injuryType"] as? String
+        self.injuredHand = json["hand"] as? String
+        self.injuryType = json["injury"] as? String
         self.rehabStartDate = json["rehabStart"] as? String
-        self.rehabEndDate = "None"
-        self.goals = ["goal 1", "goal 2", "goal 3"]
+        self.rehabEndDate = json["rehabEnd"] as? String
+        self.goal1 = json["goal1"] as? String
+        self.goal2 = json["goal2"] as? String
+        self.goal3 = json["goal3"] as? String
     }
 }
