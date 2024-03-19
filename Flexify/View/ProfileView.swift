@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    
-    let goals = ["Workout", "Drink more water", "Read a book"]
+    @ObservedObject var viewModel = ProfileViewModel()
     
     var body: some View {
         VStack {
@@ -29,7 +28,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text("BIPIN")
+                    Text(viewModel.profileData?.firstName ?? "None")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -41,7 +40,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text("KUMAR")
+                    Text(viewModel.profileData?.lastName ?? "None")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -59,7 +58,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text("bipinkumar")
+                    Text(viewModel.profileData?.username ?? "None")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -78,7 +77,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text("Left")
+                    Text(viewModel.profileData?.injuredHand ?? "None")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -90,7 +89,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text("DRF")
+                    Text(viewModel.profileData?.injuryType ?? "None")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -107,7 +106,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text("Today")
+                    Text(viewModel.profileData?.rehabStartDate ?? "None")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -119,7 +118,7 @@ struct ProfileView: View {
                         .font(.body)
                         .foregroundColor(Colours.secondaryTextColour)
                     
-                    Text("Tomorrow")
+                    Text(viewModel.profileData?.rehabEndDate ?? "None")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Colours.primaryTextColour)
@@ -138,9 +137,12 @@ struct ProfileView: View {
                         .bold()
                         .foregroundStyle(Colours.secondaryTextColour)
                     
-                    ForEach(0..<goals.count, id: \.self) { index in
-                        Text("\(index + 1). \(goals[index])")
-                            .foregroundStyle(Colours.primaryTextColour)
+                    if let goals = viewModel.profileData?.goals {
+                        
+                        ForEach(0..<(goals.count), id: \.self) { index in
+                            Text("\(index + 1). \(goals[index])")
+                                .foregroundStyle(Colours.primaryTextColour)
+                        }
                     }
                 }
                 Spacer()
@@ -149,6 +151,9 @@ struct ProfileView: View {
             .padding(.bottom, 20)
             
             Spacer()
+        }
+        .onAppear {
+            viewModel.getProfileData()
         }
     }
 }

@@ -7,14 +7,43 @@
 
 import Foundation
 
-struct UserModel: Codable {
+struct UserDashboard: Codable {
+    let currentWeek: Int?
+    let injuryTime: Int?
+    let exercisesCompleted: Int?
+    let totalExercises: Int?
+    let maxWristFlexion: Int?
+    let targetWristFlexion: Int?
+    let maxWristExtension: Int?
+    let targetWristExtension: Int?
+    let maxUlnarDeviation: Int?
+    let targetUlnarDeviation: Int?
+    let maxRadialDeviation: Int?
+    let targetRadialDeviation: Int?
+    
+    init(json: [String: Any]) {
+        self.currentWeek = json["currentWeek"] as? Int
+        self.injuryTime = json["injuryTime"] as? Int
+        self.exercisesCompleted = json["exercisesCompleted"] as? Int
+        self.totalExercises = json["totalExercises"] as? Int
+        self.maxWristFlexion = json["maxWristFlexion"] as? Int
+        self.targetWristFlexion = json["targetWristFlexion"] as? Int
+        self.maxWristExtension = json["maxWristExtension"] as? Int
+        self.targetWristExtension = json["targetWristExtension"] as? Int
+        self.maxUlnarDeviation = json["maxUlnarDeviation"] as? Int
+        self.targetUlnarDeviation = json["targetUlnarDeviation"] as? Int
+        self.maxRadialDeviation = json["maxRadialDeviation"] as? Int
+        self.targetRadialDeviation = json["targetRadialDeviation"] as? Int
+    }
+}
+
+struct UserProfile: Codable {
     let username: String?
     let firstName: String?
     let lastName: String?
     let injuredHand: String?
     let injuryType: String?
     let rehabStartDate: String?
-    let rehabDuration: Int?
     let rehabEndDate: String?
     let goals: [String]?
         
@@ -25,8 +54,7 @@ struct UserModel: Codable {
         self.injuredHand = json["injuredHand"] as? String
         self.injuryType = json["injuryType"] as? String
         self.rehabStartDate = json["rehabStart"] as? String
-        self.rehabDuration = json["rehabDuration"] as? Int
-        self.rehabEndDate = json["rehabEnd"] as? String
-        self.goals = json["goals"] as? [String]
+        self.rehabEndDate = "None"
+        self.goals = ["goal 1", "goal 2", "goal 3"]
     }
 }

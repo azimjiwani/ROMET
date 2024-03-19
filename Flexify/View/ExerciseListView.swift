@@ -111,8 +111,6 @@ struct ExerciseListView: View {
                 .scrollContentBackground(.hidden)
                 .background(Colours.backgroundColour)
 
-                
-                
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
