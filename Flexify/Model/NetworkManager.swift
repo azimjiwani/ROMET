@@ -16,6 +16,89 @@ class NetworkManager {
         
     }
     
+    func fetchProfileData(completion: @escaping (UserProfile?) -> Void) {
+        guard let url = URL(string: "\(backendURL)/get-profile-data-app/?userName=\(User.shared.username)") else {
+            completion(nil)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print("Error: \(error)")
+                completion(nil)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received")
+                completion(nil)
+                return
+            }
+            
+            do {
+                let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                guard let result = jsonResponse?["result"] as? [String: Any] else {
+                    print("Result key not found in JSON")
+                    completion(nil)
+                    return
+                }
+                
+                let userProfile = UserProfile(json: result)
+                DispatchQueue.main.async {
+                    completion(userProfile)
+                }
+                
+            } catch {
+                print("Error parsing JSON: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func fetchDashboardData(completion: @escaping (UserDashboard?) -> Void) {
+        guard let url = URL(string: "\(backendURL)/get-dashboard-data-app/?userName=\(User.shared.username)") else {
+            completion(nil)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print("Error: \(error)")
+                completion(nil)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received")
+                completion(nil)
+                return
+            }
+            
+            do {
+                let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                guard let result = jsonResponse?["result"] as? [String: Any] else {
+                    print("Result key not found in JSON")
+                    completion(nil)
+                    return
+                }
+                
+                let userDashboard = UserDashboard(json: result)
+                DispatchQueue.main.async {
+                    completion(userDashboard)
+                }
+                
+            } catch {
+                print("Error parsing JSON: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
+        
+        task.resume()
+    }
+    
+    
     func fetchExercises(date: String, completion: @escaping ([Exercise]?) -> Void) {
         // Replace the URL with your actual endpoint
         guard let url = URL(string: "\(backendURL)/get-prescribed-exercises/?userName=\(User.shared.username)&date=\(date)") else {
@@ -66,7 +149,7 @@ class NetworkManager {
             let exerciseDict = try JSONSerialization.jsonObject(with: try JSONEncoder().encode(exercise), options: []) as! [String: Any]
             
             // Define the URL for your backend endpoint
-            guard let uniqueId = exercise.uniqueId, let url = URL(string: "\(backendURL)/upload-completed-exercise/?uniqueId=\(uniqueId)") else {
+            guard let uniqueId = exercise.uniqueId, let url = URL(string: "\(backendURL)/upload-completed-exercise/?userName\(User.shared.username)&uniqueId=\(uniqueId)") else {
                 print("Invalid URL")
                 return
             }
@@ -107,3 +190,4 @@ class NetworkManager {
         }
     }
 }
+

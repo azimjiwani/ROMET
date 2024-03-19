@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @ObservedObject var viewModel = DashboardViewModel()
+    
     var body: some View {
         VStack {
             HStack {
@@ -20,27 +22,37 @@ struct DashboardView: View {
             }
             
             ScrollView(.vertical) {
-                VStack(alignment: .center, spacing: 20) { // Align the ScrollView contents to the center
-                    HStack {
-                        CustomGaugeTileView(currVal: 5, minVal: 0, maxVal: 7, label1: "Week")
-                        CustomGaugeTileView(currVal: 18, minVal: 0, maxVal: 21, label1: "Remaining", label2: "Exercises")
-                    }
-                    .scaledToFit()
+                VStack(alignment: .center, spacing: 10) { // Align the ScrollView contents to the center
                     
-                    HStack {
-                        CustomGaugeTileView(currVal: 40, minVal: 0, maxVal: 45, label1: "Wrist", label2: "Flexion", exerciseName: "Wrist Flexion")
-                        CustomGaugeTileView(currVal: 30.4, minVal: 0, maxVal: 45, label1: "Wrist", label2: "Extension", exerciseName: "Wrist Extension")
+                    if let currentWeek = viewModel.dashboardData?.currentWeek, let injuryTime = viewModel.dashboardData?.injuryTime, let completedExercises = viewModel.dashboardData?.exercisesCompleted, let totalExercises = viewModel.dashboardData?.totalExercises {
+                        HStack {
+                            CustomGaugeTileView(currVal: Float(currentWeek), minVal: 0, maxVal: Float(injuryTime), label1: "Week")
+                            CustomGaugeTileView(currVal: Float(completedExercises), minVal: 0, maxVal: Float(totalExercises), label1: "Exercises", label2: "Completed")
+                        }
+                        .scaledToFit()
                     }
-                    .scaledToFit()
                     
-                    HStack {
-                        CustomGaugeTileView(currVal: 30.4, minVal: 0, maxVal: 45, label1: "Radial", label2: "Deviation", exerciseName: "Radial Deviation")
-                        CustomGaugeTileView(currVal: 30.4, minVal: 0, maxVal: 45, label1: "Ulnar", label2: "Deviation", exerciseName: "Ulnar Deviation")
+                    if let maxWristFlexion = viewModel.dashboardData?.maxWristFlexion, let targetWristFlexion = viewModel.dashboardData?.targetWristFlexion, let maxWristExtension = viewModel.dashboardData?.maxWristExtension, let targetWristExtension = viewModel.dashboardData?.targetWristExtension {
+                        HStack {
+                            CustomGaugeTileView(currVal: Float(maxWristFlexion), minVal: 0, maxVal: Float(targetWristFlexion), label1: "Wrist", label2: "Flexion", exerciseName: "Wrist Flexion")
+                            CustomGaugeTileView(currVal: Float(maxWristExtension), minVal: 0, maxVal: Float(targetWristExtension), label1: "Wrist", label2: "Extension", exerciseName: "Wrist Extension")
+                        }
+                        .scaledToFit()
                     }
-                    .scaledToFit()
+                    
+                    if let maxRadialDeviation = viewModel.dashboardData?.maxRadialDeviation, let targetRadialDeviation = viewModel.dashboardData?.targetRadialDeviation, let maxUlnarDeviation = viewModel.dashboardData?.maxUlnarDeviation, let targetUlnarDeviation = viewModel.dashboardData?.targetUlnarDeviation {
+                        HStack {
+                            CustomGaugeTileView(currVal: Float(maxUlnarDeviation), minVal: 0, maxVal: Float(targetUlnarDeviation), label1: "Ulnar", label2: "Deviation", exerciseName: "Ulnar Deviation")
+                            CustomGaugeTileView(currVal: Float(maxRadialDeviation), minVal: 0, maxVal: Float(targetRadialDeviation), label1: "Radial", label2: "Deviation", exerciseName: "Radial Deviation")
+                        }
+                        .scaledToFit()
+                    }
                 }
                 .padding()
             }
+        }
+        .onAppear {
+            viewModel.getDashboardData()
         }
     }
 }
@@ -69,13 +81,9 @@ struct CustomGaugeTileView: View {
             
             VStack(spacing: 15) {
                 CustomGaugeView(currVal: currVal, minVal: minVal, maxVal: maxVal, label1: label1, label2: label2, exerciseName: exerciseName)
-                if exerciseName != nil {
-                    Text("↑ 10% from last week")
-                        .foregroundStyle(.black)
-                }
             }
         }
-        .frame(height: exerciseName != nil ? 210 : 190)
+        .frame(height: 190)
     }
 }
 
