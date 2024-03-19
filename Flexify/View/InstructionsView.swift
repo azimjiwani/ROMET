@@ -109,6 +109,7 @@ struct InstructionsView: View {
                                     Text("1. Begin with your wrist in a neutral position, positioning the ulnar side (pinky side) toward the camera, ensuring it's neither flexed nor extended. Keep your fingers relaxed.")
                                         .font(.body)
                                         .foregroundColor(Colours.primaryTextColour)
+                                    Spacer()
                                 }
                                 .padding(.horizontal, 20)
                                 .padding(.bottom, 10)
