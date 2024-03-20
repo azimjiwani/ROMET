@@ -69,7 +69,6 @@ struct ExerciseListView: View {
                                     let exerciseViewModel = ExerciseViewModel(exercise: exercise)
                                     let instructionView = InstructionsView(viewModel: exerciseViewModel)
                                     
-                                    // Check if the exercise is not completed before making the row tappable
                                     if exercise.isCompleted == false {
                                         NavigationLink(destination: instructionView.toolbar(.hidden, for: .tabBar)) {
                                             HStack {
@@ -77,9 +76,23 @@ struct ExerciseListView: View {
                                                     Text(exercise.name ?? "no name")
                                                         .foregroundStyle(Colours.primaryTextColour)
                                                     
-                                                    Text(exercise.hand == true ? "left" : "right" )
-                                                        .font(.subheadline)
-                                                        .foregroundStyle(Colours.secondaryTextColour)
+                                                    HStack(spacing: 0) {
+                                                        if exercise.hand == true {
+                                                            Text("Hand: Left | ")
+                                                                .font(.subheadline)
+                                                                .foregroundStyle(Colours.secondaryTextColour)
+                                                        } else {
+                                                            Text("Hand: Right | ")
+                                                                .font(.subheadline)
+                                                                .foregroundStyle(Colours.secondaryTextColour)
+                                                        }
+                                                        
+                                                        if let sets = exercise.sets, let reps = exercise.reps {
+                                                            Text("Sets: \(sets) | Reps: \(reps)")
+                                                                .font(.subheadline)
+                                                                .foregroundStyle(Colours.secondaryTextColour)
+                                                        }
+                                                    }
                                                 }
                                                 Spacer()
                                             }
@@ -92,9 +105,23 @@ struct ExerciseListView: View {
                                                 Text(exercise.name ?? "no name")
                                                     .foregroundStyle(Colours.primaryTextColour)
                                                 
-                                                Text(exercise.hand == true ? "left" : "right" )
-                                                    .font(.subheadline)
-                                                    .foregroundStyle(Colours.secondaryTextColour)
+                                                HStack(spacing: 0) {
+                                                    if exercise.hand == true {
+                                                        Text("Hand: Left | ")
+                                                            .font(.subheadline)
+                                                            .foregroundStyle(Colours.secondaryTextColour)
+                                                    } else {
+                                                        Text("Hand: Right | ")
+                                                            .font(.subheadline)
+                                                            .foregroundStyle(Colours.secondaryTextColour)
+                                                    }
+                                                    
+                                                    if let sets = exercise.sets, let reps = exercise.reps {
+                                                        Text("Sets: \(sets) | Reps: \(reps)")
+                                                            .font(.subheadline)
+                                                            .foregroundStyle(Colours.secondaryTextColour)
+                                                    }
+                                                }
                                             }
                                             Spacer()
                                             Image(systemName: "checkmark.circle")

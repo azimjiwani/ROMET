@@ -79,8 +79,10 @@ struct CustomGaugeTileView: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
             
-            VStack(spacing: 15) {
+            VStack {
+                Spacer()
                 CustomGaugeView(currVal: currVal, minVal: minVal, maxVal: maxVal, label1: label1, label2: label2, exerciseName: exerciseName)
+                Spacer()
             }
         }
         .frame(height: 190)

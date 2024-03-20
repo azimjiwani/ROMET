@@ -184,6 +184,7 @@ struct ExerciseView: View {
                 Spacer(minLength: 32)
                 if let reps = viewModel.exercise?.reps, let sets = viewModel.exercise?.sets {
                     Text("Sets: \(sets) | Reps: \(reps)")
+                        .font(.system(size: 16, weight: .semibold))
                         .offset(y: -32)
                         .foregroundStyle(Colours.primaryTextColour)
                 }
@@ -264,15 +265,15 @@ struct ExerciseView: View {
                 }
                 HStack {
                     Text("Angle: \(max(runningAverageAngle, 0))°")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Colours.primaryTextColour)
                     
                     Text("Reps: \(repCount)")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Colours.primaryTextColour)
                     
                     Text("Sets: \(setCount)")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Colours.primaryTextColour)
                 }
                 
@@ -291,6 +292,6 @@ struct ExerciseView: View {
             }
         }
         .background(Colours.backgroundColour)
-        .navigationBarTitle(viewModel.exercise?.name ?? "no name")
+        .navigationBarTitle(viewModel.exercise?.name ?? "no name").font(.largeTitle)
     }
 }
