@@ -21,7 +21,6 @@ struct Exercise: Identifiable, Codable {
     let uniqueId: String?
     let type: ExerciseType?
     let name: String?
-    let description: String?
     let sets: Int?
     let reps: Int?
     let hand: Bool?
@@ -36,7 +35,6 @@ struct Exercise: Identifiable, Codable {
     init(json: [String: Any]) {
         self.uniqueId = json["uniqueId"] as? String
         self.name = json["exerciseName"] as? String
-        self.description = json["description"] as? String
         self.sets = json["sets"] as? Int
         self.reps = json["reps"] as? Int
         self.hand = json["hand"] as? Bool

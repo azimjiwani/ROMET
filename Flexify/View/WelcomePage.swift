@@ -44,6 +44,36 @@ struct WelcomePage: View {
         }.resume()
     }
     
+    private func deleteUser() {
+        // Construct URL with username as a query parameter
+        guard let url = URL(string: "\(Constants.backendURL)/delete-user/?userName=\(username)") else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE" // Specify DELETE method
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print("No data received: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    print("User deleted successfully")
+                    // Handle success
+                } else {
+                    print("Failed to delete user. Status code: \(httpResponse.statusCode)")
+                    // Handle failure
+                }
+            }
+            
+        }.resume()
+    }
+
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -85,6 +115,19 @@ struct WelcomePage: View {
                         validateUsername()
                     } label: {
                         Text("Login")
+                            .font(.headline)
+                            .foregroundStyle(Colours.buttonTextColour)
+                            .bold()
+                    }
+                    .frame(width: 200, height: 50)
+                    .background(Colours.buttonBackgroundColour)
+                    .cornerRadius(25)
+                    .buttonStyle(.plain)
+                    
+                    Button {
+                        deleteUser()
+                    } label: {
+                        Text("Delete")
                             .font(.headline)
                             .foregroundStyle(Colours.buttonTextColour)
                             .bold()
