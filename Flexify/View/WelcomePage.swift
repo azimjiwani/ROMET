@@ -124,18 +124,18 @@ struct WelcomePage: View {
                     .cornerRadius(25)
                     .buttonStyle(.plain)
                     
-                    Button {
-                        deleteUser()
-                    } label: {
-                        Text("Delete")
-                            .font(.headline)
-                            .foregroundStyle(Colours.buttonTextColour)
-                            .bold()
-                    }
-                    .frame(width: 200, height: 50)
-                    .background(Colours.buttonBackgroundColour)
-                    .cornerRadius(25)
-                    .buttonStyle(.plain)
+//                    Button {
+//                        deleteUser()
+//                    } label: {
+//                        Text("Delete")
+//                            .font(.headline)
+//                            .foregroundStyle(Colours.buttonTextColour)
+//                            .bold()
+//                    }
+//                    .frame(width: 200, height: 50)
+//                    .background(Colours.buttonBackgroundColour)
+//                    .cornerRadius(25)
+//                    .buttonStyle(.plain)
                     
                     Spacer()
                     
