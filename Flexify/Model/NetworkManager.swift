@@ -149,7 +149,7 @@ class NetworkManager {
             let exerciseDict = try JSONSerialization.jsonObject(with: try JSONEncoder().encode(exercise), options: []) as! [String: Any]
             
             // Define the URL for your backend endpoint
-            guard let uniqueId = exercise.uniqueId, let url = URL(string: "\(backendURL)/upload-completed-exercise/?userName\(User.shared.username)&uniqueId=\(uniqueId)") else {
+            guard let uniqueId = exercise.uniqueId, let url = URL(string: "\(backendURL)/upload-completed-exercise/?userName=\(User.shared.username)&uniqueId=\(uniqueId)") else {
                 print("Invalid URL")
                 return
             }
