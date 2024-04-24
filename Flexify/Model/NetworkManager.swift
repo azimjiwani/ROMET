@@ -12,8 +12,31 @@ class NetworkManager {
     
     let backendURL = Constants.backendURL
     
-    func fetchUserInfo(username: String) {
+    func validateUsername(username: String, completion: @escaping(Bool) -> Void) {
+            
+        // Construct URL with username as a query parameter
+        guard let url = URL(string: "\(Constants.backendURL)/verify-username/?userName=\(username)") else {
+            print("Invalid URL")
+            completion(false)
+            return
+        }
         
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data else {
+                print("No data received: \(error?.localizedDescription ?? "Unknown error")")
+                completion(false)
+                return
+            }
+            
+            if let isValid = try? JSONDecoder().decode(Bool.self, from: data) {
+                DispatchQueue.main.async {
+                    completion(isValid)
+                }
+            } else {
+                print("Failed to decode response")
+                completion(false)
+            }
+        }.resume()
     }
     
     func fetchProfileData(completion: @escaping (UserProfile?) -> Void) {
